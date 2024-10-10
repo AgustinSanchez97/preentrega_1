@@ -24,8 +24,8 @@ export class StudentDialogComponent {
   )
   {
     this.studentForm = this.formBuilder.group({
-      firstName: [null, [Validators.required]],
-      lastName: [null, [Validators.required]],
+      first_Name: [null, [Validators.required]],
+      last_Name: [null, [Validators.required]],
       email: [null, [Validators.required]],
     });
     //this.patchFormValue();
@@ -44,7 +44,7 @@ export class StudentDialogComponent {
         id: this.isEditing
           ? this.data!.editingStudent!.id
           : "asdf",//cambiar
-        createdAt: this.isEditing
+          createdDate: this.isEditing
           ? this.data!.editingStudent!.createdDate
           : new Date(),
       });

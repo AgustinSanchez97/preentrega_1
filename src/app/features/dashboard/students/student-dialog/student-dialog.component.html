@@ -8,9 +8,9 @@
         <div class="col-6">
           <mat-form-field class="example-form-field w-100">
             <mat-label>Nombre</mat-label>
-            <input formControlName="firstName" matInput type="text" />
+            <input formControlName="first_Name" matInput type="text" />
             <mat-error>
-              @if(studentForm.get('firstName')?.hasError('required')) { Este campo es
+              @if(studentForm.get('first_Name')?.hasError('required')) { Este campo es
               requerido }
             </mat-error>
           </mat-form-field>
@@ -18,9 +18,9 @@
         <div class="col-6">
           <mat-form-field class="example-form-field w-100">
             <mat-label>Apellido</mat-label>
-            <input formControlName="lastName" matInput type="text" />
+            <input formControlName="last_Name" matInput type="text" />
             <mat-error>
-              @if(studentForm.get('lastName')?.hasError('required')) { Este campo es
+              @if(studentForm.get('last_Name')?.hasError('required')) { Este campo es
               requerido }
             </mat-error>
           </mat-form-field>

@@ -5,12 +5,12 @@ import { Directive, ElementRef } from '@angular/core';
 })
 export class FontmodifyDirective {
 
-  constructor(private h1: ElementRef<HTMLElement>) {
-
+  constructor(private el: ElementRef<HTMLElement>) {
+    this.applyFontChange();
    }
 
    applyFontChange():void{
-    this.h1.nativeElement.style.fontSize = "20px"
+    this.el.nativeElement.style.fontSize = "20px"
    }
 
 }
