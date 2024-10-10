@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IStudent } from '../models';
 
-/*
-interface UserDialogData {
-  editingUser?: IStudent;
-}*/
+
+interface studentDialogData {
+  editingStudent?: IStudent;
+}
 
 @Component({
   selector: 'app-student-dialog',
@@ -20,7 +20,7 @@ export class StudentDialogComponent {
   constructor(
     private matDialogRef: MatDialogRef<StudentDialogComponent>,
     private formBuilder: FormBuilder,
-    
+    @Inject(MAT_DIALOG_DATA) public data?: studentDialogData
   )
   {
     this.studentForm = this.formBuilder.group({
@@ -30,7 +30,9 @@ export class StudentDialogComponent {
     });
     //this.patchFormValue();
   }
-
+  private get isEditing() {
+    return !!this.data?.editingStudent;
+  }
 
 
   onSave(): void {
@@ -40,11 +42,12 @@ export class StudentDialogComponent {
       this.matDialogRef.close({
         ...this.studentForm.value,
         id: this.isEditing
-          ? this.data!.editingUser!.id
-          : 1,
+          ? this.data!.editingStudent!.id
+          : "asdf",//cambiar
         createdAt: this.isEditing
-          ? this.data!.editingUser!.createdAt
+          ? this.data!.editingStudent!.createdDate
           : new Date(),
       });
     }
+  }
 }

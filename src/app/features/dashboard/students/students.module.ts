@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { StudentsRoutingModule } from './students-routing.module';
 import { StudentsComponent } from './students.component';
+import { SharedModule } from '../../../shared/shared.module';
 import { StudentDialogComponent } from './student-dialog/student-dialog.component';
 
 
@@ -13,7 +14,9 @@ import { StudentDialogComponent } from './student-dialog/student-dialog.componen
   ],
   imports: [
     CommonModule,
-    StudentsRoutingModule
-  ]
+    StudentsRoutingModule,
+    SharedModule
+  ],
+  exports:[StudentsComponent]
 })
 export class StudentsModule { }

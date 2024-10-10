@@ -1,6 +1,19 @@
 import { Component } from '@angular/core';
 import { IStudent } from './models';
 import { MatDialog } from '@angular/material/dialog';
+import { StudentDialogComponent } from './student-dialog/student-dialog.component';
+
+
+
+const ELEMENT_DATA: IStudent[] = [
+  {
+    id: 'dbv3Da',
+    first_Name: 'Goku',
+    last_Name: 'Son',
+    createdDate: new Date(),
+    email: 'gokussj3@gmail.com',
+  },
+];
 
 @Component({
   selector: 'app-students',
@@ -9,69 +22,40 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class StudentsComponent {
 
-  displayedColumns: string[] = ['id', 'name', 'email', 'createdAt', 'actions'];
-  dataSource: IStudent[] = [];
+  displayedColumns: string[] = ['id', 'name', 'email', 'createdDate', 'actions'];
+  dataSource = ELEMENT_DATA;
   isLoading = false;
   
   
-  constructor(
-    private matDialog: MatDialog,
-    private usersService: UsersService
-  ) {}
+  constructor(private matDialog: MatDialog) {}
   
 
-  
-  openModal(editingUser?: IStudent): void {
-    this.matDialog
-    .open(UserDialogComponent, {
-      data: {
-          editingUser,
+  onDelete(id: string) {
+    if (confirm('Esta seguro?')) {
+      this.dataSource = this.dataSource.filter((student) => student.id !== id);
+    }
+  }
+  openModal(editingStudent?: IStudent): void {
+    this.matDialog      
+      .open(StudentDialogComponent, {
+        data: {
+          editingStudent,
         },
       })
       .afterClosed()
       .subscribe({
         next: (result) => {
-          if (!!result) {
-            if (editingUser) {
-              this.handleUpdate(editingUser.id, result);
+          
+          if (!!result) {            
+            if (editingStudent) {
+              this.dataSource = this.dataSource.map((student) =>
+                student.id === editingStudent.id ? { ...student, ...result } : student
+              );
             } else {
               this.dataSource = [...this.dataSource, result];
             }
           }
         },
-      });
+      });  
     }
-    
-    onDelete(id: string) {
-      if (confirm('Esta seguro?')) {
-        // this.dataSource = this.dataSource.filter((user) => user.id !== id);
-        this.isLoading = true;
-        this.usersService.removeUserById(id).subscribe({
-          next: (users) => {
-            this.dataSource = users;
-          },
-          error: (err) => {
-            this.isLoading = false;
-          },
-          complete: () => {
-            this.isLoading = false;
-          },
-        });
-      }
-    }
-    
-  handleUpdate(id: string, update: IStudent): void {
-    this.isLoading = true;
-    this.usersService.updateUserById(id, update).subscribe({
-      next: (users) => {
-        this.dataSource = users;
-      },
-      error: (err) => {
-        this.isLoading = false;
-      },
-      complete: () => {
-        this.isLoading = false;
-      },
-    });
-  }
 }

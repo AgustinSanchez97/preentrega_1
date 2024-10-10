@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { IStudent } from '../../features/dashboard/students/models';
 
 @Pipe({
-  name: 'userFullName'
+  name: 'studentFullName'
 })
-export class UserFullNamePipe implements PipeTransform {
+export class StudentFullNamePipe implements PipeTransform {
 
   transform(value: IStudent, ...args: unknown[]): unknown {
     return value.first_Name + " " + value.last_Name;
