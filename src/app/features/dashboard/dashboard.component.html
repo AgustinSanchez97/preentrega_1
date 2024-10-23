@@ -1,12 +1,18 @@
+<router-outlet></router-outlet>
+
 <mat-drawer-container class="example-container" autosize>
     <mat-drawer #drawer class="example-sidenav" mode="side">
-      <p>Auto-resizing sidenav</p>
-      @if (showFiller) {
+      <mat-nav-list>
+        <a mat-list-item routerLink="/dashboard">Dashboard</a>
+        <a mat-list-item routerLink="/">Home</a>
+      </mat-nav-list>
+
+
+      @if (showFiller) 
+      {
         <p>Lorem, ipsum dolor sit amet consectetur.</p>
       }
-      <button (click)="showFiller = !showFiller" mat-raised-button>
-        Toggle extra text
-      </button>
+      <button (click)="showFiller = !showFiller" mat-raised-button></button>
     </mat-drawer>
   
     <div class="example-sidenav-content">
