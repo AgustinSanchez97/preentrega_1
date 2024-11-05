@@ -3,30 +3,29 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { CoursesComponent } from './features/dashboard/courses/courses.component';
 import { TeachersComponent } from './features/dashboard/courses/teachers/teachers.component';
+import { AuthComponent } from './features/auth/auth.component';
+import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: "dashboard",
-    component: DashboardComponent,
-    children: [
-      {
-        path: "courses",
-        component: CoursesComponent,
-        children: [
-          {
-            path: "teachers",
-            component: TeachersComponent
-          }
-        ]
-      }
-    ]
+    path: 'auth',
+    component: AuthComponent,
+    loadChildren: () =>
+      import('./features/auth/auth.module').then((m) => m.AuthModule),
   },
   {
-    path: "**",
-    redirectTo:"dashboard"
+    path: 'dashboard',
+    canActivate: [authGuard],
+    component: DashboardComponent,
+    loadChildren: () =>
+      import('./features/dashboard/dashboard.module').then(
+        (m) => m.DashboardModule
+      ),
   },
-
-
+  {
+    path: '**',
+    redirectTo: 'auth',
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "id": "4d22",
+      "firstName": "Admin",
+      "lastName": "Administrador",
+      "email": "admin@mail.com",
+      "password": "admin",
+      "role": "ADMIN",
+      "token": "ndsHSBnsdjkasJs354MSjsnmvcs332SJnxjS",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "Fr24",
+      "firstName": "Naruto",
+      "lastName": "Uzumakis",
+      "email": "naru@mail.com",
+      "password": "LHxfNUFt",
+      "role": "USER",
+      "token": "FKejj6VrYmRw2EtEuecO",
+      "createdAt": "2024-10-24T01:28:09.184Z"
+    },
+    {
+      "id": "x9xF",
+      "firstName": "asdf",
+      "lastName": "FAdsafsss",
+      "email": "dasfdsa",
+      "createdAt": "2024-11-04T21:55:39.012Z",
+      "role": "USER",
+      "password": "wSuqjEmT",
+      "token": "I8ZyuorjHkNfX7hAu82d"
+    },
+    {
+      "id": "Vfgh",
+      "firstName": "asd",
+      "lastName": "ddds",
+      "email": "asdsa@mail.com",
+      "createdAt": "2024-11-05T01:38:20.020Z",
+      "role": "USER",
+      "password": "z60MmwuD",
+      "token": "jhZMRFl2Q3m4i2JcRTAd"
+    }
+  ]
+}

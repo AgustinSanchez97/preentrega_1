@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-courses',
@@ -6,5 +8,11 @@ import { Component } from '@angular/core';
   styles: ``
 })
 export class CoursesComponent {
+
+  constructor(
+    private matDialog: MatDialog,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
 }

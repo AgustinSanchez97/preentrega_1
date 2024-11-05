@@ -1,54 +1,44 @@
 import { Injectable } from '@angular/core';
 
-import { delay, map, Observable, of } from 'rxjs';
+import { concatMap, delay, map, Observable, of } from 'rxjs';
 import { IStudent } from '../../features/dashboard/students/models';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment.development';
 
-let DATABASE: IStudent[] = [
-  {
-    id: 'dbv3Da',
-    first_Name: 'Goku',
-    last_Name: 'Son',
-    createdDate: new Date(),
-    email: 'gokussj3@gmail.com',
-  },
-];
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentsService {
+  private baseURL = environment.apiBaseURL;
 
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
 
   getById(id: string): Observable<IStudent | undefined> {
-    return this.getStudents().pipe(map((students) => students.find((u) => u.id === id)));
+    return this.httpClient.get<IStudent>(`${this.baseURL}/students/${id}`);
   }
 
   getStudents(): Observable<IStudent[]> {
-    return new Observable((observer) => {
-      setInterval(() => {
-        // observer.error('Error al cargar los datos');
-        observer.next(DATABASE);
-        observer.complete();
-      }, 1000);
+    return this.httpClient.get<IStudent[]>(`${this.baseURL}/students`);
+  }
+
+  createStudent(data: Omit<IStudent, 'id'>): Observable<IStudent> {
+    return this.httpClient.post<IStudent>(`${this.baseURL}/students`, {
+      ...data,
+      createdAt: new Date().toISOString(),
     });
   }
 
-  removeStudentsById(id: string): Observable<IStudent[]> {
-    DATABASE = DATABASE.filter((student) => student.id != id);
-    return of(DATABASE).pipe(delay(1000));
+  removeStudentById(id: string): Observable<IStudent[]> {
+    return this.httpClient
+      .delete<IStudent>(`${this.baseURL}/students/${id}`)
+      .pipe(concatMap(() => this.getStudents()));
   }
 
-  updateStudentsById(id: string, update: Partial<IStudent>) {
-    DATABASE = DATABASE.map((student) =>
-      student.id === id ? { ...student, ...update } : student
-    );
-
-    return new Observable<IStudent[]>((observer) => {
-      setInterval(() => {
-        observer.next(DATABASE);
-        observer.complete();
-      }, 1000);
-    });
+  updateStudentById(id: string, update: Partial<IStudent>) {
+    return this.httpClient
+      .patch<IStudent>(`${this.baseURL}/students/${id}`, update)
+      .pipe(concatMap(() => this.getStudents()));
   }
 }

@@ -43,9 +43,9 @@ export class StudentsComponent {
     if (confirm('Esta seguro?')) {
       // this.dataSource = this.dataSource.filter((user) => user.id !== id);
       this.isLoading = true;
-      this.studentsService.removeStudentsById(id).subscribe({
-        next: (students) => {
-          this.dataSource = students;
+      this.studentsService.removeStudentById(id).subscribe({
+        next: (student) => {
+          this.dataSource = student;
         },
         error: (err) => {
           this.isLoading = false;
@@ -86,9 +86,9 @@ export class StudentsComponent {
 
   handleUpdate(id: string, update: IStudent): void {
     this.isLoading = true;
-    this.studentsService.updateStudentsById(id, update).subscribe({
-      next: (students) => {
-        this.dataSource = students;
+    this.studentsService.updateStudentById(id, update).subscribe({
+      next: (student) => {
+        this.dataSource = student;
       },
       error: (err) => {
         this.isLoading = false;
