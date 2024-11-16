@@ -11,11 +11,13 @@ import { AuthService } from '../../core/services/auth.service';
 })
 export class DashboardComponent {
   showFiller = false;
-
+  role:string = "user";
   authUser$: Observable<User | null>;
 
   constructor(private router: Router, private authService: AuthService) {
     this.authUser$ = this.authService.authUser$;
+    this.authUser$.subscribe((value) =>{ this.role = value?.role as string; console.log(this.role)})
+    
   }
 
   logout(): void {

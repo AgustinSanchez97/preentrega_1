@@ -15,12 +15,13 @@ export class StudentsService {
 
   constructor(private httpClient: HttpClient) {}
 
+  
+    getStudents(): Observable<IStudent[]> {
+      return this.httpClient.get<IStudent[]>(`${this.baseURL}/students`);
+    }
+
   getById(id: string): Observable<IStudent | undefined> {
     return this.httpClient.get<IStudent>(`${this.baseURL}/students/${id}`);
-  }
-
-  getStudents(): Observable<IStudent[]> {
-    return this.httpClient.get<IStudent[]>(`${this.baseURL}/students`);
   }
 
   createStudent(data: Omit<IStudent, 'id'>): Observable<IStudent> {

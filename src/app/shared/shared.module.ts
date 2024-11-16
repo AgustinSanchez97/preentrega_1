@@ -14,13 +14,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FontmodifyDirective } from './directives/fontmodify.directive';
 import { UserFullNamePipe } from './pipes/user-full-name.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { StudentsInCoursePipe } from './pipes/students-in-course.pipe';
 
 
 @NgModule({
   declarations: [
     StudentFullNamePipe,
     FontmodifyDirective,
-    UserFullNamePipe
+    UserFullNamePipe,
+    StudentsInCoursePipe
   ],
   imports: [
     CommonModule
@@ -40,7 +42,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatTableModule,
     StudentFullNamePipe,
     UserFullNamePipe,
-    FontmodifyDirective
+    FontmodifyDirective,
+    StudentsInCoursePipe
   ]
 })
 export class SharedModule { }

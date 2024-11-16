@@ -9,16 +9,18 @@
         routerLink="home"
         [activated]="homeLink.isActive"
         mat-list-item
-        >INICIO</a
-      >
+        >INICIO
+        </a>
       <a
+        
+        *ngIf='role === "admin"'
         routerLink="users"
         mat-list-item
         routerLinkActive
         #usersLink="routerLinkActive"
         [activated]="usersLink.isActive"
-        >USUARIOS</a
-      >
+        >USUARIOS
+      </a>
 
       <a
         routerLink="students"
@@ -26,16 +28,16 @@
         routerLinkActive
         #categoriesLink="routerLinkActive"
         [activated]="categoriesLink.isActive"
-        >ESTUDIANTES</a
-      >
+        >ESTUDIANTES
+        </a>
       <a
         routerLink="courses"
         mat-list-item
         routerLinkActive
         #coursesLink="routerLinkActive"
         [activated]="coursesLink.isActive"
-        >CURSOS</a
-      >
+        >CURSOS
+        </a>
 
       <a (click)="logout()" mat-list-item>CERRAR SESION</a>
     </mat-nav-list>

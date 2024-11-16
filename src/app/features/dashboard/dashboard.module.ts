@@ -11,14 +11,13 @@ import {MatIconModule} from '@angular/material/icon';
 import { StudentsModule } from './students/students.module';
 import { MatListModule } from '@angular/material/list';
 
-import { TeachersComponent } from './courses/teachers/teachers.component';
+
 import { CoursesComponent } from './courses/courses.component';
 
 
 @NgModule({
   declarations: [
-    DashboardComponent,
-    TeachersComponent
+    DashboardComponent
   ],
   imports: [
     CommonModule,

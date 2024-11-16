@@ -6,7 +6,7 @@
       "lastName": "Administrador",
       "email": "admin@mail.com",
       "password": "admin",
-      "role": "ADMIN",
+      "role": "admin",
       "token": "ndsHSBnsdjkasJs354MSjsnmvcs332SJnxjS",
       "createdAt": "2024-10-24T00:14:33.140Z"
     },
@@ -16,7 +16,7 @@
       "lastName": "Uzumakis",
       "email": "naru@mail.com",
       "password": "LHxfNUFt",
-      "role": "USER",
+      "role": "user",
       "token": "FKejj6VrYmRw2EtEuecO",
       "createdAt": "2024-10-24T01:28:09.184Z"
     },
@@ -26,19 +26,78 @@
       "lastName": "FAdsafsss",
       "email": "dasfdsa",
       "createdAt": "2024-11-04T21:55:39.012Z",
-      "role": "USER",
+      "role": "user",
       "password": "wSuqjEmT",
       "token": "I8ZyuorjHkNfX7hAu82d"
     },
     {
       "id": "Vfgh",
       "firstName": "asd",
-      "lastName": "ddds",
+      "lastName": "Sanchez",
       "email": "asdsa@mail.com",
       "createdAt": "2024-11-05T01:38:20.020Z",
-      "role": "USER",
+      "role": "user",
       "password": "z60MmwuD",
       "token": "jhZMRFl2Q3m4i2JcRTAd"
+    }
+  ],
+  "students": [
+    {
+      "id": "4d2as",
+      "firstName": "Admin",
+      "lastName": "Administrador",
+      "email": "admin@mail.com",
+      "createdDate": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "Frsf4",
+      "firstName": "Naruto",
+      "lastName": "Uzumakis",
+      "email": "naru@mail.com",
+      "createdDate": "2024-10-24T01:28:09.184Z"
+    },
+    {
+      "id": "xsafF",
+      "firstName": "asdf",
+      "lastName": "FAdsafsss",
+      "email": "dasfdsa",
+      "createdDate": "2024-11-04T21:55:39.012Z"
+    },
+    {
+      "id": "Vasf",
+      "firstName": "asd",
+      "lastName": "ddds",
+      "email": "agus@mail.com",
+      "createdDate": "2024-11-15T22:00:51.810Z",
+      "first_Name": "agustin",
+      "last_Name": "sanchez"
+    }
+  ],
+  "courses": [
+    {
+      "id": "f1sfdhg",
+      "name": "Angular",
+      "studentsId": [
+        "Frsf4",
+        "xsafF",
+        "Vasf"
+      ]
+    },
+    {
+      "id": "f1sffdsdag",
+      "name": "Angular",
+      "studentsId": [
+        "Frsf4",
+        "xsafF"
+      ]
+    },
+    {
+      "id": "f1sasdfhg",
+      "name": "Angular",
+      "studentsId": [
+        "xsafF",
+        "Vasf"
+      ]
     }
   ]
 }

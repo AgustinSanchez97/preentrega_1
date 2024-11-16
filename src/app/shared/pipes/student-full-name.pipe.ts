@@ -7,7 +7,7 @@ import { IStudent } from '../../features/dashboard/students/models';
 export class StudentFullNamePipe implements PipeTransform {
 
   transform(value: IStudent, ...args: unknown[]): unknown {
-    return value.first_Name + " " + value.last_Name;
+    return value.firstName + " " + value.lastName;
   }
 
 }
