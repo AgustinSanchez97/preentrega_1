@@ -4,15 +4,21 @@ import { CommonModule } from '@angular/common';
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses.component';
 import { SharedModule } from '../../../shared/shared.module';
+
 import { EffectsModule } from '@ngrx/effects';
 import { CourseEffects } from './store/course.effects';
 import { StoreModule } from '@ngrx/store';
 import { courseFeature } from './store/course.reducer';
+import { CourseDialogComponent } from './course-dialog/course-dialog.component';
+import { CourseDetailComponent } from './course-detail/course-detail.component';
 
 
 @NgModule({
   declarations: [
-    CoursesComponent
+    CoursesComponent,
+    CourseDialogComponent,
+    CourseDetailComponent
+
   ],
   imports: [
     CommonModule,
@@ -21,8 +27,7 @@ import { courseFeature } from './store/course.reducer';
     
     StoreModule.forFeature(courseFeature),
     EffectsModule.forFeature([CourseEffects]),
-    
-    
-  ]
+  ],
+  exports: [CoursesComponent]
 })
 export class CoursesModule {}

@@ -1,0 +1,64 @@
+
+<h1>Curso de: {{ course?.name}}</h1>
+
+<div class="container">
+  
+    <h2>Estudiantes anotados al Curso</h2>
+    
+    <!-- <button (click)="onDisplay()" mat-flat-button>display</button> -->
+
+    <form [formGroup]="studentForm" (ngSubmit)="onSubmit(studentForm.value.studentId)">
+      <mat-form-field>
+        <mat-label>Estudiante</mat-label>
+        <mat-select formControlName="studentId">
+          <mat-option
+            [value]="student.id"
+            *ngFor="let student of selectData"
+          >
+            {{ student.lastName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button type="submit" mat-flat-button>Guardar</button>
+    </form>
+      
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let student">{{ student.id }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Apellido</th>
+      <td color="violet" appHighlight mat-cell *matCellDef="let student">
+        {{ student.lastName}}
+      </td>
+    </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="Students">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let student">{{ student.firstName}}</td>
+    </ng-container>
+
+    
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let student">
+        <button (click)="onDelete(student.id)" mat-icon-button>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

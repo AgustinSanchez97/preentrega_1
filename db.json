@@ -47,30 +47,67 @@
       "firstName": "Admin",
       "lastName": "Administrador",
       "email": "admin@mail.com",
-      "createdDate": "2024-10-24T00:14:33.140Z"
+      "createdDate": "2024-10-24T00:14:33.140Z",
+      "coursesId": [],
+      "courses": []
     },
     {
       "id": "Frsf4",
       "firstName": "Naruto",
       "lastName": "Uzumakis",
       "email": "naru@mail.com",
-      "createdDate": "2024-10-24T01:28:09.184Z"
+      "createdDate": "2024-10-24T01:28:09.184Z",
+      "coursesId": [],
+      "courses": []
     },
     {
       "id": "xsafF",
-      "firstName": "asdf",
-      "lastName": "FAdsafsss",
-      "email": "dasfdsa",
-      "createdDate": "2024-11-04T21:55:39.012Z"
+      "firstName": "Vincent",
+      "lastName": "Valentine",
+      "email": "VV@mail.com",
+      "createdDate": "2024-11-04T21:55:39.012Z",
+      "coursesId": [
+        "e0akrVsE",
+        "f1sfdhg"
+      ],
+      "courses": [
+        {
+          "id": "e0akrVsE",
+          "name": "Javascript",
+          "studentsId": [],
+          "students": [
+            {
+              "id": "xsafF",
+              "firstName": "Vincent",
+              "lastName": "Valentine",
+              "email": "VV@mail.com",
+              "createdDate": "2024-11-04T21:55:39.012Z",
+              "coursesId": [
+                "e0akrVsE"
+              ],
+              "courses": []
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "Vasf",
       "firstName": "asd",
-      "lastName": "ddds",
+      "lastName": "Gonzalez",
       "email": "agus@mail.com",
       "createdDate": "2024-11-15T22:00:51.810Z",
-      "first_Name": "agustin",
-      "last_Name": "sanchez"
+      "coursesId": [],
+      "courses": []
+    },
+    {
+      "id": "3zFWUbuz",
+      "firstName": "Prueba",
+      "lastName": "Pruebita",
+      "email": "Pruebota@mail.com",
+      "createdAt": "2024-11-27T07:01:40.837Z",
+      "coursesId": [],
+      "courses": []
     }
   ],
   "courses": [
@@ -78,25 +115,80 @@
       "id": "f1sfdhg",
       "name": "Angular",
       "studentsId": [
-        "Frsf4",
-        "xsafF",
-        "Vasf"
-      ]
+        "xsafF"
+      ],
+      "students": []
     },
     {
       "id": "f1sffdsdag",
       "name": "Angular",
-      "studentsId": [
-        "Frsf4",
-        "xsafF"
-      ]
+      "studentsId": [],
+      "students": []
     },
     {
       "id": "f1sasdfhg",
       "name": "Angular",
-      "studentsId": [
-        "xsafF",
-        "Vasf"
+      "studentsId": [],
+      "students": []
+    },
+    {
+      "id": "e0akrVsE",
+      "name": "Javascript",
+      "studentsId": [],
+      "students": [
+        {
+          "id": "xsafF",
+          "firstName": "Vincent",
+          "lastName": "Valentine",
+          "email": "VV@mail.com",
+          "createdDate": "2024-11-04T21:55:39.012Z",
+          "coursesId": [
+            "e0akrVsE"
+          ],
+          "courses": []
+        }
+      ]
+    },
+    {
+      "id": "EQ2kfYO1",
+      "name": "React",
+      "studentsId": [],
+      "students": [
+        {
+          "id": "xsafF",
+          "firstName": "Vincent",
+          "lastName": "Valentine",
+          "email": "VV@mail.com",
+          "createdDate": "2024-11-04T21:55:39.012Z",
+          "coursesId": [
+            "e0akrVsE",
+            "f1sfdhg",
+            "EQ2kfYO1"
+          ],
+          "courses": []
+        }
+      ]
+    },
+    {
+      "id": "GMKx9yH0",
+      "name": "prueba",
+      "studentsId": [],
+      "students": [
+        {
+          "id": "xsafF",
+          "firstName": "Vincent",
+          "lastName": "Valentine",
+          "email": "VV@mail.com",
+          "createdDate": "2024-11-04T21:55:39.012Z",
+          "coursesId": [
+            "e0akrVsE",
+            "f1sfdhg",
+            "EQ2kfYO1",
+            "f1sasdfhg",
+            "GMKx9yH0"
+          ],
+          "courses": []
+        }
       ]
     }
   ]

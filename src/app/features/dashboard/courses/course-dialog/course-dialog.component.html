@@ -1,40 +1,20 @@
 <h1 mat-dialog-title>
-    {{ data?.editingStudent ? "Editando" : "Creando" }} usuario
+    {{ data?.editingCourse ? "Editando" : "Creando" }} usuario
   </h1>
   
   <div mat-dialog-content>
-    <form [formGroup]="studentForm">
+    <form [formGroup]="courseForm">
       <div class="row">
-        <div class="col-6">
-          <mat-form-field class="example-form-field w-100">
-            <mat-label>Nombre</mat-label>
-            <input formControlName="first_Name" matInput type="text" />
-            <mat-error>
-              @if(studentForm.get('first_Name')?.hasError('required')) { Este campo es
-              requerido }
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col-6">
-          <mat-form-field class="example-form-field w-100">
-            <mat-label>Apellido</mat-label>
-            <input formControlName="last_Name" matInput type="text" />
-            <mat-error>
-              @if(studentForm.get('last_Name')?.hasError('required')) { Este campo es
-              requerido }
-            </mat-error>
-          </mat-form-field>
-        </div>
         <div class="col-12">
-          <mat-form-field class="example-form-field w-100">
-            <mat-label>Email</mat-label>
-            <input formControlName="email" matInput type="email" />
+          <mat-form-field class="example-form-field w-100 ">
+            <mat-label>Nombre del Curso</mat-label>
+            <input formControlName="name" matInput type="text" />
             <mat-error>
-              @if(studentForm.get('email')?.hasError('required')) { Este campo es
+              @if(courseForm.get('name')?.hasError('required')) { Este campo es
               requerido }
             </mat-error>
           </mat-form-field>
-        </div>
+        </div>        
       </div>
     </form>
   </div>

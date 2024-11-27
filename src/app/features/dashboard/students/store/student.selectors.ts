@@ -7,15 +7,15 @@ export const selectStudentState = createFeatureSelector<fromStudent.State>(
 
 export const selectStudents = createSelector(
   selectStudentState,
-  (state) => state.courses
+  (state) => state.students
 );
 
-export const selectIsLoadingCourses = createSelector(
+export const selectIsLoadingStudents = createSelector(
   selectStudentState,
-  (state) => state.isLoadingCourses
+  (state) => state.isLoadingStudents
 );
 
-export const selectLoadCoursesError = createSelector(
+export const selectLoadStudentsError = createSelector(
   selectStudentState,
-  (state) => state.loadCoursesError
+  (state) => state.loadStudentsError
 );

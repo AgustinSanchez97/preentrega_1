@@ -5,15 +5,15 @@ import { IStudent } from '../models';
 export const studentFeatureKey = 'student';
 
 export interface State {
-  courses: IStudent[];
-  isLoadingCourses: boolean;
-  loadCoursesError: Error | null;
+  students: IStudent[];
+  isLoadingStudents: boolean;
+  loadStudentsError: Error | null;
 }
 
 export const initialState: State = {
-  courses: [],  
-  isLoadingCourses: false,
-  loadCoursesError: null,
+  students: [],  
+  isLoadingStudents: false,
+  loadStudentsError: null,
 };
 
 export const reducer = createReducer(
@@ -23,29 +23,74 @@ export const reducer = createReducer(
   on(StudentActions.loadStudents, (state) => {
     return{
       ...state,
-      isLoadingCourses: true,
+      isLoadingStudents: true,
     }
   }),
   on(StudentActions.loadStudentsSuccess, (state, action) => {
     return {
       ...state,
-      courses: action.data,
-      isLoadingCourses: false,
-      loadCoursesError: null,
+      students: action.data,
+      isLoadingStudents: false,
+      loadStudentsError: null,
     };
   }),
   on(StudentActions.loadStudentsFailure, (state, action) => {
     return {
       ...state,
       ...initialState,
-      isLoadingCourses: false,
-      loadCoursesError: action.error,
+      isLoadingStudents: false,
+      loadStudentsError: action.error,
     };
   }),
 
+  on(StudentActions.createStudent, (state) => {
+    return{
+      ...state,
+      isLoadingStudents: true,
+    }
+  }),
+  on(StudentActions.createStudentSuccess, (state, action) => {
+    return {
+      ...state,
+      student: action.data,
+      isLoadingStudents: false,
+      loadStudentsError: null,
+    };
+  }),
+  on(StudentActions.createStudentFailure, (state, action) => {
+    return {
+      ...state,
+      ...initialState,
+      isLoadingStudents: false,
+      loadStudentsError: action.error,
+    };
+  }),
+
+  on(StudentActions.deleteStudent, (state) => {
+    return{
+      ...state,
+      isLoadingStudents: true,
+    }
+  }),
+  on(StudentActions.deleteStudentSuccess, (state, action) => {
+    return {
+      ...state,
+      student: action.data,
+      isLoadingStudents: false,
+      loadStudentsError: null,
+    };
+  }),
+  on(StudentActions.deleteStudentFailure, (state, action) => {
+    return {
+      ...state,
+      ...initialState,
+      isLoadingStudents: false,
+      loadStudentsError: action.error,
+    };
+  }),
 );
 
-export const courseFeature = createFeature({
+export const studentFeature = createFeature({
   name: studentFeatureKey,
   reducer,
 });

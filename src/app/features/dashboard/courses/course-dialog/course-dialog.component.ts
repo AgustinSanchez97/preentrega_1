@@ -1,54 +1,49 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IStudent } from '../../students/models';
+import { generateRandomString } from '../../../../shared/utils';
+import { ICourse } from '../models';
 
 
 
-interface studentDialogData {
-  editingStudent?: IStudent;
+interface courseDialogData {
+  editingCourse?: ICourse;
 }
 
 @Component({
-  selector: 'app-student-dialog',
-  templateUrl: './student-dialog.component.html',
+  selector: 'app-course-dialog',
+  templateUrl: './course-dialog.component.html',
   styles: ``
 })
-export class StudentDialogComponent {
+export class CourseDialogComponent {
 
-  studentForm: FormGroup;
+  courseForm: FormGroup;
 
   constructor(
-    private matDialogRef: MatDialogRef<StudentDialogComponent>,
+    private matDialogRef: MatDialogRef<CourseDialogComponent>,
     private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data?: studentDialogData
+    @Inject(MAT_DIALOG_DATA) public data?: courseDialogData
   )
   {
-    this.studentForm = this.formBuilder.group({
-      first_Name: [null, [Validators.required]],
-      last_Name: [null, [Validators.required]],
-      email: [null, [Validators.required]],
+    this.courseForm = this.formBuilder.group({
+      name: [null, [Validators.required]]
     });
-    //this.patchFormValue();
   }
   private get isEditing() {
-    return !!this.data?.editingStudent;
+    return !!this.data?.editingCourse;
   }
 
-
   onSave(): void {
-    if (this.studentForm.invalid) {
-      this.studentForm.markAllAsTouched();
+    if (this.courseForm.invalid) {
+      this.courseForm.markAllAsTouched();
     } else {
       this.matDialogRef.close({
-        ...this.studentForm.value,
+        ...this.courseForm.value,
         id: this.isEditing
-          ? this.data!.editingStudent!.id
+          ? this.data!.editingCourse!.id
           : "asdf",//cambiar
-          createdDate: this.isEditing
-          ? this.data!.editingStudent!.createdDate
-          : new Date(),
       });
     }
   }
+    
 }

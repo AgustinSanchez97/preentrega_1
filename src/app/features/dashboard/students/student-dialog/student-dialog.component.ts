@@ -24,11 +24,10 @@ export class StudentDialogComponent {
   )
   {
     this.studentForm = this.formBuilder.group({
-      first_Name: [null, [Validators.required]],
-      last_Name: [null, [Validators.required]],
+      firstName: [null, [Validators.required]],
+      lastName: [null, [Validators.required]],
       email: [null, [Validators.required]],
     });
-    //this.patchFormValue();
   }
   private get isEditing() {
     return !!this.data?.editingStudent;

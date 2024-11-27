@@ -15,10 +15,10 @@ export class CoursesService {
 
   constructor(private httpClient: HttpClient) {}
   
+  
+  /*
   courses$ : ICourse[] = []
   students$: IStudent[] = []
-
-  /*
   getCourses(): Observable<ICourse[]> {
     this.httpClient.get<IStudent[]>(`${this.baseURL}/students/`).subscribe((students) =>
       { 
@@ -50,33 +50,43 @@ export class CoursesService {
   }*/
   
   getCourses(): Observable<ICourse[]> {
+    
     return this.httpClient.get<ICourse[]>(`${this.baseURL}/courses?_embed=student`);
   }
 
-  /*
-    getById(id: string): Observable<User | undefined> {
-      return this.httpClient.get<User>(`${this.baseURL}/users/${id}`);
-    }
-  createUser(data: Omit<User, 'id'>): Observable<User> {
-    return this.httpClient.post<User>(`${this.baseURL}/users`, {
+  getById(id: string): Observable<ICourse > {
+    //console.log("entro")
+    return this.httpClient.get<ICourse>(`${this.baseURL}/courses/${id}`);
+  }
+  
+  createCourse(data: Omit<ICourse, 'id' | "studentsId" | "students">): Observable<ICourse> {
+    return this.httpClient.post<ICourse>(`${this.baseURL}/courses`, {
       ...data,
-      role: 'USER',
-      password: generateRandomString(8),
-      token: generateRandomString(20),
-      createdAt: new Date().toISOString(),
+      id: generateRandomString(8),
+      studentsId:[],
     });
   }
 
-  removeUserById(id: string): Observable<User[]> {
+  removeCourseById(id: string): Observable<ICourse[]> {
     return this.httpClient
-      .delete<User>(`${this.baseURL}/users/${id}`)
-      .pipe(concatMap(() => this.getUsers()));
+      .delete<ICourse>(`${this.baseURL}/courses/${id}`)
+      .pipe(concatMap(() => this.getCourses()));
   }
 
-  updateUserById(id: string, update: Partial<User>) {
+  updateCourseById(id: string, data: Partial<ICourse>) {
+    //console.log(id,{...data})
     return this.httpClient
-      .patch<User>(`${this.baseURL}/users/${id}`, update)
-      .pipe(concatMap(() => this.getUsers()));
+      .patch<ICourse>(`${this.baseURL}/courses/${id}`, data)
+      .pipe(concatMap(() => this.getCourses()));
   }
-      */
+
+  updateCourseAndStudentById(courseId: string, courseData: Partial<ICourse>,studentId: string, studentData: Partial<IStudent>) {
+    //console.log(courseId,courseData,studentId,studentData)
+    // this.httpClient
+    //   .patch<IStudent>(`${this.baseURL}/students/${studentId}`, studentData)
+    return this.httpClient
+      .patch<ICourse>(`${this.baseURL}/courses/${courseId}`, courseData)
+      .pipe(concatMap(() => this.getCourses()));
+  }
+      
 }

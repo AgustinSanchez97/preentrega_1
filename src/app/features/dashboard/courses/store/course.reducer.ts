@@ -4,7 +4,6 @@ import { ICourse } from '../models';
 
 export const courseFeatureKey = 'course';
 
-
 export interface State {
   courses: ICourse[];
   isLoadingCourses: boolean;
@@ -14,7 +13,7 @@ export interface State {
 export const initialState: State = {
   courses: [],  
   isLoadingCourses: false,
-  loadCoursesError: null,
+  loadCoursesError: null
 };
 
 export const reducer = createReducer(
@@ -43,6 +42,104 @@ export const reducer = createReducer(
       loadCoursesError: action.error,
     };
   }),
+
+  //Carga de Curso
+  /*
+  on(CourseActions.loadCourse, (state) => {
+    return{
+      ...state,
+      isLoadingCourses: true,
+    }
+  }),
+  on(CourseActions.loadCourseSuccess, (state, action) => {
+    return {
+      ...state,
+      course: action.data,
+      isLoadingCourses: false,
+      loadCoursesError: null,
+    };
+  }),
+  on(CourseActions.loadCourseFailure, (state, action) => {
+    return {
+      ...state,
+      ...initialState,
+      isLoadingCourses: false,
+      loadCoursesError: action.error,
+    };
+  }),*/
+
+  // Crear Curso
+  
+  on(CourseActions.createCourse, (state) => {
+    return{
+      ...state,
+      isLoadingCourses: true,
+    }
+  }),
+  on(CourseActions.createCourseSuccess, (state, action) => {
+    return {
+      ...state,
+      course: action.data,
+      isLoadingCourses: false,
+      loadCoursesError: null,
+    };
+  }),
+  on(CourseActions.createCourseFailure, (state, action) => {
+    return {
+      ...state,
+      ...initialState,
+      isLoadingCourses: false,
+      loadCoursesError: action.error,
+    };
+  }),
+
+  on(CourseActions.deleteCourse, (state) => {
+    return{
+      ...state,
+      isLoadingCourses: true,
+    }
+  }),
+  on(CourseActions.deleteCourseSuccess, (state, action) => {
+    return {
+      ...state,
+      course: action.data,
+      isLoadingCourses: false,
+      loadCoursesError: null,
+    };
+  }),
+  on(CourseActions.deleteCourseFailure, (state, action) => {
+    return {
+      ...state,
+      ...initialState,
+      isLoadingCourses: false,
+      loadCoursesError: action.error,
+    };
+  }),
+/*
+  on(CourseActions.deleteStudentfromCourse, (state) => {
+    return{
+      ...state,
+      isLoadingCourses: true,
+    }
+  }),
+  on(CourseActions.deleteStudentfromCourseSuccess, (state, action) => {
+    return {
+      ...state,
+      course: action.data,
+      isLoadingCourses: false,
+      loadCoursesError: null,
+    };
+  }),
+  on(CourseActions.deleteStudentfromCourseFailure, (state, action) => {
+    return {
+      ...state,
+      ...initialState,
+      isLoadingCourses: false,
+      loadCoursesError: action.error,
+    };
+  }),
+*/
+
 
 );
 
