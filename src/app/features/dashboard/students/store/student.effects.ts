@@ -42,11 +42,11 @@ export class StudentEffects {
         ofType(StudentActions.loadStudents),
         concatMap(() => 
           forkJoin([
-            this.coursesService.getCourses(), // Traer cursos
-            this.studentsService.getStudents()  // Traer estudiantes
+            this.studentsService.getStudents(),  // Traer estudiantes
+            this.coursesService.getCourses() // Traer cursos
           ]).pipe(
             //Success
-            map(([courses, students]) => {
+            map(([students,courses ]) => {
               const studentsFull = students.map(student => {
                 student.courses = []
                 student.coursesId.map(id => 
@@ -100,6 +100,7 @@ export class StudentEffects {
       return this.actions$.pipe(
         ofType(StudentActions.deleteStudent),
         concatMap((action) =>
+          
           this.studentsService
             .removeStudentById(action.id)
             .pipe(
@@ -111,6 +112,30 @@ export class StudentEffects {
         )
       );
     });
+    /*
+        this.deleteStudent$ = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(StudentActions.deleteStudent),
+        concatMap((action) =>
+          forkJoin([
+            this.studentsService.getStudents(),
+            this.coursesService.getCourses(),
+            //this.studentsService.removeStudentById(action.id),
+            //this.coursesService.deletedStudentById(action.id)
+          ])
+            .pipe(
+              map(([students]) => {
+                
+                return StudentActions.deleteStudentSuccess({data:students})
+            }),
+            //Error
+            catchError((error) => of(StudentActions.deleteStudentFailure({ error })))
+            )
+        )
+      );
+    });
+        
+    */
 
     this.deleteStudentSuccess$ = createEffect(() => {
       return this.actions$.pipe(
@@ -158,19 +183,19 @@ export class StudentEffects {
           ])
             .pipe(
               map(([students, courses]) => {
-                  const coursesFull = courses.map(course => {
-                    course.students = []
-                    course.studentsId.map(id => 
+                  const studentsFull = students.map(student => {
+                    student.courses = []
+                    student.coursesId.map(id => 
                     {
-                      let studentFilter : any
-                      studentFilter = students.find(student => student.id === id.toString()) // filtrar estudiantes por id                
-                      course.students?.push(studentFilter)
+                      let courseFilter : any
+                      courseFilter = courses.find(course => course.id === id.toString()) // filtrar estudiantes por id                
+                      student.courses?.push(courseFilter)
                     }
                   )
-                return {...course};
+                return {...student};
                });
                 
-              return StudentActions.changeStudentFromCourseSuccess({ data : students });
+              return StudentActions.changeStudentFromCourseSuccess({ data : studentsFull });
               }),
               //Error
               catchError((error) => of(StudentActions.changeStudentFromCourseFailure({ error })))

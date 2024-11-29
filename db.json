@@ -39,6 +39,16 @@
       "role": "user",
       "password": "z60MmwuD",
       "token": "jhZMRFl2Q3m4i2JcRTAd"
+    },
+    {
+      "id": "c770",
+      "firstName": "Agustin",
+      "lastName": "Sanchez",
+      "email": "agus@mail.com",
+      "password": "agus",
+      "role": "admin",
+      "token": "ddg6ALNow0WtG8XDHXAt",
+      "createdAt": "2024-11-28T21:36:17.990Z"
     }
   ],
   "students": [
@@ -48,7 +58,10 @@
       "lastName": "Administrador",
       "email": "admin@mail.com",
       "createdDate": "2024-10-24T00:14:33.140Z",
-      "coursesId": [],
+      "coursesId": [
+        "e0akrVsE",
+        "f1sasdfhg"
+      ],
       "courses": []
     },
     {
@@ -57,7 +70,9 @@
       "lastName": "Uzumakis",
       "email": "naru@mail.com",
       "createdDate": "2024-10-24T01:28:09.184Z",
-      "coursesId": [],
+      "coursesId": [
+        "xnlEdYni"
+      ],
       "courses": []
     },
     {
@@ -67,46 +82,8 @@
       "email": "VV@mail.com",
       "createdDate": "2024-11-04T21:55:39.012Z",
       "coursesId": [
-        "e0akrVsE",
-        "f1sfdhg"
+        "xnlEdYni"
       ],
-      "courses": [
-        {
-          "id": "e0akrVsE",
-          "name": "Javascript",
-          "studentsId": [],
-          "students": [
-            {
-              "id": "xsafF",
-              "firstName": "Vincent",
-              "lastName": "Valentine",
-              "email": "VV@mail.com",
-              "createdDate": "2024-11-04T21:55:39.012Z",
-              "coursesId": [
-                "e0akrVsE"
-              ],
-              "courses": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "Vasf",
-      "firstName": "asd",
-      "lastName": "Gonzalez",
-      "email": "agus@mail.com",
-      "createdDate": "2024-11-15T22:00:51.810Z",
-      "coursesId": [],
-      "courses": []
-    },
-    {
-      "id": "3zFWUbuz",
-      "firstName": "Prueba",
-      "lastName": "Pruebita",
-      "email": "Pruebota@mail.com",
-      "createdAt": "2024-11-27T07:01:40.837Z",
-      "coursesId": [],
       "courses": []
     }
   ],
@@ -114,82 +91,43 @@
     {
       "id": "f1sfdhg",
       "name": "Angular",
-      "studentsId": [
-        "xsafF"
-      ],
-      "students": []
-    },
-    {
-      "id": "f1sffdsdag",
-      "name": "Angular",
       "studentsId": [],
       "students": []
     },
     {
       "id": "f1sasdfhg",
       "name": "Angular",
-      "studentsId": [],
+      "studentsId": [
+        "4d2as"
+      ],
       "students": []
     },
     {
       "id": "e0akrVsE",
       "name": "Javascript",
       "studentsId": [],
-      "students": [
-        {
-          "id": "xsafF",
-          "firstName": "Vincent",
-          "lastName": "Valentine",
-          "email": "VV@mail.com",
-          "createdDate": "2024-11-04T21:55:39.012Z",
-          "coursesId": [
-            "e0akrVsE"
-          ],
-          "courses": []
-        }
-      ]
+      "students": []
     },
     {
       "id": "EQ2kfYO1",
       "name": "React",
       "studentsId": [],
-      "students": [
-        {
-          "id": "xsafF",
-          "firstName": "Vincent",
-          "lastName": "Valentine",
-          "email": "VV@mail.com",
-          "createdDate": "2024-11-04T21:55:39.012Z",
-          "coursesId": [
-            "e0akrVsE",
-            "f1sfdhg",
-            "EQ2kfYO1"
-          ],
-          "courses": []
-        }
-      ]
+      "students": []
     },
     {
-      "id": "GMKx9yH0",
+      "id": "xnlEdYni",
       "name": "prueba",
+      "studentsId": [
+        "Frsf4",
+        "xsafF"
+      ],
+      "students": []
+    },
+    {
+      "id": "BvTwY5VO",
+      "name": "fasdf",
       "studentsId": [],
-      "students": [
-        {
-          "id": "xsafF",
-          "firstName": "Vincent",
-          "lastName": "Valentine",
-          "email": "VV@mail.com",
-          "createdDate": "2024-11-04T21:55:39.012Z",
-          "coursesId": [
-            "e0akrVsE",
-            "f1sfdhg",
-            "EQ2kfYO1",
-            "f1sasdfhg",
-            "GMKx9yH0"
-          ],
-          "courses": []
-        }
-      ]
+      "students": []
     }
   ]
 }

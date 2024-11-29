@@ -41,7 +41,7 @@ export class CourseDialogComponent {
         ...this.courseForm.value,
         id: this.isEditing
           ? this.data!.editingCourse!.id
-          : "asdf",//cambiar
+          : generateRandomString(8),
       });
     }
   }

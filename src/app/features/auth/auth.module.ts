@@ -6,6 +6,9 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { SharedModule } from '../../shared/shared.module';
 import { AuthComponent } from './auth.component';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { authFeature } from './store/auth.reducer';
 
 
 
@@ -18,7 +21,8 @@ import { AuthComponent } from './auth.component';
   imports: [
     CommonModule,
     AuthRoutingModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature(authFeature),
   ]
 })
 export class AuthModule { }

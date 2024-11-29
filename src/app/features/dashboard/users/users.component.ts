@@ -4,6 +4,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { UsersService } from '../../../core/services/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserActions } from './store/user.actions';
+import { Observable } from 'rxjs';
+import { selectIsLoadingUsers, selectLoadUsersError, selectUsers } from './store/user.selectors';
 
 @Component({
   selector: 'app-users',
@@ -14,54 +19,46 @@ export class UsersComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'email', 'createdAt', 'actions'];
   dataSource: User[] = [];
 
-  isLoading = false;
-
-  usuario = {
-    nombre: 'Josue',
-    apellido: 'Baez',
-  };
+  users$: Observable<User[]>;
+  isLoadingUsers$: Observable<boolean>;
+  loadUsersError$: Observable<Error | null>;
   
+  userForm: FormGroup;
+
   constructor(
-    private matDialog: MatDialog,
+    private matDialog: MatDialog, 
+    private store: Store, 
+    private formBuilder: FormBuilder,
+    private router: Router, 
+    private activatedRoute: ActivatedRoute,
     private usersService: UsersService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) {}
+  ) 
+  {
+
+    this.users$ = this.store.select(selectUsers);
+    this.isLoadingUsers$ = this.store.select(selectIsLoadingUsers);
+    this.loadUsersError$ = this.store.select(selectLoadUsersError);
+    
+    this.users$.subscribe((value) =>{ this.dataSource = value; })
+    
+    this.userForm = this.formBuilder.group({
+      firstName: [null, [Validators.required]],
+      lastName: [null, [Validators.required]],
+      email: [null, [Validators.required]]
+    });
+
+  }
 
   ngOnInit(): void {
-    this.loadUsers();
+    this.store.dispatch(UserActions.loadUsers());
   }
 
-  loadUsers(): void {
-    this.isLoading = true;
-    this.usersService.getUsers().subscribe({
-      next: (users) => {
-        this.dataSource = users;
-      },
-      error: () => {
-        this.isLoading = false;
-      },
-      complete: () => {
-        this.isLoading = false;
-      },
-    });
-  }
 
   onDelete(id: string) {
     if (confirm('Esta seguro?')) {
-      // this.dataSource = this.dataSource.filter((user) => user.id !== id);
-      this.isLoading = true;
-      this.usersService.removeUserById(id).subscribe({
-        next: (users) => {
-          this.dataSource = users;
-        },
-        error: (err) => {
-          this.isLoading = false;
-        },
-        complete: () => {
-          this.isLoading = false;
-        },
-      });
+      let result = {id}
+      this.store.dispatch(UserActions.deleteUser(result))
+      this.store.dispatch(UserActions.loadUsers());
     }
   }
 
@@ -70,6 +67,12 @@ export class UsersComponent implements OnInit {
       relativeTo: this.activatedRoute,
     });
   }
+  /*
+  display(): void {
+    console.log(this.users$)
+    console.log(this.dataSource)
+  }
+    */
 
   openModal(editingUser?: User): void {
     this.matDialog
@@ -85,9 +88,8 @@ export class UsersComponent implements OnInit {
             if (editingUser) {
               this.handleUpdate(editingUser.id, result);
             } else {
-              this.usersService
-                .createUser(result)
-                .subscribe({ next: () => this.loadUsers() });
+              this.store.dispatch(UserActions.createUser(result))
+              this.store.dispatch(UserActions.loadUsers());
             }
           }
         },
@@ -95,17 +97,7 @@ export class UsersComponent implements OnInit {
   }
 
   handleUpdate(id: string, update: User): void {
-    this.isLoading = true;
-    this.usersService.updateUserById(id, update).subscribe({
-      next: (users) => {
-        this.dataSource = users;
-      },
-      error: (err) => {
-        this.isLoading = false;
-      },
-      complete: () => {
-        this.isLoading = false;
-      },
-    });
+    this.store.dispatch(UserActions.changeUser({id, data:update}));
   }
+  
 }

@@ -5,7 +5,7 @@ import { ICourse } from '../models';
 export const courseFeatureKey = 'course';
 
 export interface State {
-  courses: ICourse[];
+  courses: ICourse[] ;
   isLoadingCourses: boolean;
   loadCoursesError: Error | null;
 }

@@ -50,7 +50,6 @@ export class CoursesService {
   }*/
   
   getCourses(): Observable<ICourse[]> {
-    
     return this.httpClient.get<ICourse[]>(`${this.baseURL}/courses?_embed=student`);
   }
 
@@ -80,13 +79,4 @@ export class CoursesService {
       .pipe(concatMap(() => this.getCourses()));
   }
 
-  updateCourseAndStudentById(courseId: string, courseData: Partial<ICourse>,studentId: string, studentData: Partial<IStudent>) {
-    //console.log(courseId,courseData,studentId,studentData)
-    // this.httpClient
-    //   .patch<IStudent>(`${this.baseURL}/students/${studentId}`, studentData)
-    return this.httpClient
-      .patch<ICourse>(`${this.baseURL}/courses/${courseId}`, courseData)
-      .pipe(concatMap(() => this.getCourses()));
-  }
-      
 }

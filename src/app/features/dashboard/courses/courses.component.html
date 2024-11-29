@@ -1,19 +1,21 @@
 
 
 <div class="container">
-  <h1 appFontmodify>Cursos</h1>
+  <!-- <h1 appFontmodify>Cursos</h1> -->
+  <h2 >Cursos</h2>
+
 
   <!-- <button mat-button (click)="openModal()">
     <mat-icon> add </mat-icon>
     Crear Curso
   </button>  -->
 
-  <form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
-    <mat-form-field>
+  <form [formGroup]="courseForm" (ngSubmit)="openModal()">
+    <!-- <mat-form-field>
       <mat-label>Nombre de Curso</mat-label>
         <input formControlName="name" matInput type="text" />
-    </mat-form-field>    
-    <button type="submit" mat-flat-button>Guardar</button>
+    </mat-form-field>     -->
+    <button type="submit" mat-flat-button>Crear Nuevo Curso</button>
   </form>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

@@ -106,9 +106,9 @@ export class CourseDetailComponent implements OnInit{
       this.student = this.student as IStudent
       let newStudent = {...this.student}      
       newStudent.coursesId = newStudent.coursesId.filter(course => course.toString() !== this.course?.id)
+      newStudent.courses= []
 
       this.store.dispatch(CourseActions.changeStudentFromCourse({studentId:studentId,studentData:newStudent,courseId:this.idCourse,courseData:newCourse}))
-      //this.store.dispatch(CourseActions.changeCourse({id: this.idCourse, data:newCourse}));
       this.store.dispatch(CourseActions.loadCourses());
     }
   }
@@ -134,9 +134,9 @@ export class CourseDetailComponent implements OnInit{
       //CREA LISTA UNICA SIN DUPLICADOS
       let newCoursesListUnique = new Set(newCoursesList);
       newStudent.coursesId = [...newCoursesListUnique]
-
+      newStudent.courses= []
+      
       this.store.dispatch(CourseActions.changeStudentFromCourse({studentId:studentId,studentData:newStudent,courseId:this.idCourse,courseData:newCourse}))
-      //this.store.dispatch(CourseActions.changeCourse({id: this.idCourse, data:newCourse}));
       this.buildSelectList()
       this.studentForm.reset();
     }

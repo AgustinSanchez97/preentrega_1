@@ -28,6 +28,7 @@ import { CourseEffects } from '../courses/store/course.effects';
     
     StoreModule.forFeature(studentFeature),
     EffectsModule.forFeature([StudentEffects]),
+    
     StoreModule.forFeature(courseFeature),
     EffectsModule.forFeature([CourseEffects]),
 

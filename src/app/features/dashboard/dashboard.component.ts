@@ -13,11 +13,12 @@ export class DashboardComponent {
   showFiller = false;
   role:string = "user";
   authUser$: Observable<User | null>;
+  dataSource : User
 
   constructor(private router: Router, private authService: AuthService) {
     this.authUser$ = this.authService.authUser$;
-    this.authUser$.subscribe((value) =>{ this.role = value?.role as string; console.log(this.role)})
-    
+    this.dataSource = {} as User
+    this.authUser$.subscribe((value) =>{ this.dataSource = value as User; })
   }
 
   logout(): void {

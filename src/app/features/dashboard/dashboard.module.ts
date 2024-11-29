@@ -13,6 +13,9 @@ import { MatListModule } from '@angular/material/list';
 
 
 import { CoursesComponent } from './courses/courses.component';
+import { StoreModule } from '@ngrx/store';
+import { authFeature } from '../auth/store/auth.reducer';
+import { RegistrationsModule } from './registrations/registrations.module';
 
 
 @NgModule({
@@ -27,7 +30,9 @@ import { CoursesComponent } from './courses/courses.component';
     MatToolbarModule,
     MatIconModule,
     MatListModule,
-    StudentsModule
+    StudentsModule,
+    StoreModule.forFeature(authFeature),
+    RegistrationsModule
   ],
     
   exports:[DashboardComponent]

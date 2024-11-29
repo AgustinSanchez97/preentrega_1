@@ -21,11 +21,9 @@ export class UsersService {
     return this.httpClient.get<User[]>(`${this.baseURL}/users`);
   }
 
-  createUser(data: Omit<User, 'id'>): Observable<User> {
+  createUser(data: Omit<User, 'id'| "token" | "createdAt">): Observable<User> {
     return this.httpClient.post<User>(`${this.baseURL}/users`, {
       ...data,
-      role: 'USER',
-      password: generateRandomString(8),
       token: generateRandomString(20),
       createdAt: new Date().toISOString(),
     });

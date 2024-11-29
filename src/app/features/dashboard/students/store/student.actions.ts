@@ -31,6 +31,7 @@ export const StudentActions = createActionGroup({
     'Change Student Success': props<{ data: IStudent[]}>(),
     'Change Student Failure': props<{ error: Error }>(),
     
+    // Eliminar Curso del Estudiante
     'Change Student From Course': props<{  studentId: string;studentData:IStudent; courseId: string;courseData:ICourse }>(),
     'Change Student From Course Success': props<{ data: IStudent[] }>(),
     'Change Student From Course Failure': props<{ error: Error }>(),

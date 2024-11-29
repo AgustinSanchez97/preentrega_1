@@ -13,7 +13,7 @@
         </a>
       <a
         
-        *ngIf='role === "admin"'
+        *ngIf='dataSource.role === "admin"'
         routerLink="users"
         mat-list-item
         routerLinkActive
@@ -37,6 +37,15 @@
         #coursesLink="routerLinkActive"
         [activated]="coursesLink.isActive"
         >CURSOS
+        </a>
+        
+        <a
+        routerLink="registrations"
+        mat-list-item
+        routerLinkActive
+        #registrationsLink="routerLinkActive"
+        [activated]="registrationsLink.isActive"
+        >INSCRIPCIONES
         </a>
 
       <a (click)="logout()" mat-list-item>CERRAR SESION</a>

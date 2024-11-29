@@ -38,6 +38,7 @@ export const CourseActions = createActionGroup({
     'Change Student From Course': props<{ studentId: string;studentData:IStudent; courseId: string;courseData:ICourse }>(),
     'Change Student From Course Success': props<{ data: ICourse[]}>(),
     'Change Student From Course Failure': props<{ error: Error }>(),
+
     
   }
 });

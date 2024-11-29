@@ -11,6 +11,8 @@ import { StoreModule } from '@ngrx/store';
 import { courseFeature } from './store/course.reducer';
 import { CourseDialogComponent } from './course-dialog/course-dialog.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
+import { studentFeature } from '../students/store/student.reducer';
+import { StudentEffects } from '../students/store/student.effects';
 
 
 @NgModule({
@@ -18,13 +20,14 @@ import { CourseDetailComponent } from './course-detail/course-detail.component';
     CoursesComponent,
     CourseDialogComponent,
     CourseDetailComponent
-
   ],
   imports: [
     CommonModule,
     CoursesRoutingModule,
     SharedModule,
-    
+
+    StoreModule.forFeature(studentFeature),
+    EffectsModule.forFeature([StudentEffects]),
     StoreModule.forFeature(courseFeature),
     EffectsModule.forFeature([CourseEffects]),
   ],

@@ -36,8 +36,8 @@ export class StudentDetailComponent {
   isLoadingStudents$: Observable<boolean>;
   loadStudentsError$: Observable<Error | null>;
 
-  loadCoursesError$: Observable<Error | null>;
-  isLoadingCourses$: Observable<boolean>;
+  // loadCoursesError$: Observable<Error | null>;
+  // isLoadingCourses$: Observable<boolean>;
   //selectData: ICourse[];
   
   
@@ -72,11 +72,12 @@ export class StudentDetailComponent {
       let studentCourses = student?.courses as ICourse[]
       this.dataSource = studentCourses
       this.student = student
+      //console.log(this.dataSource)
     })
     
     this.courses$ = this.store.select(selectCourses)
-    this.isLoadingCourses$ = this.store.select(selectIsLoadingCourses);
-    this.loadCoursesError$ = this.store.select(selectLoadCoursesError);
+    // this.isLoadingCourses$ = this.store.select(selectIsLoadingCourses);
+    // this.loadCoursesError$ = this.store.select(selectLoadCoursesError);
     this.buildSelectList()
     
   }
@@ -113,16 +114,18 @@ export class StudentDetailComponent {
       this.student = this.student as IStudent
       let newStudent = {...this.student}      
       newStudent.coursesId = newStudent.coursesId.filter(course => course.toString() !== courseId)
-      newStudent.courses = []
+      newStudent.courses= []
 
       this.findCourse(courseId)
 
       this.course = this.course as ICourse
       let newCourse = {...this.course}      
       newCourse.studentsId = newCourse.studentsId.filter(student => student.toString() !== this.idStudent)
-
-      this.store.dispatch(CourseActions.changeStudentFromCourse({studentId:this.idStudent,studentData:newStudent,courseId:courseId,courseData:newCourse}))
-      this.store.dispatch(StudentActions.loadStudents())
+      newCourse.students= []
+      this.store.dispatch(StudentActions.changeStudentFromCourse({studentId:this.idStudent,studentData:newStudent,courseId:courseId,courseData:newCourse}))
+      
+      //this.store.dispatch(StudentActions.loadStudents())
+      this.buildSelectList()
     }
   }
 
@@ -150,11 +153,15 @@ export class StudentDetailComponent {
       //CREA LISTA UNICA SIN DUPLICADOS
       let newStudentsListUnique = new Set(newStudentsList);
       newCourse.studentsId = [...newStudentsListUnique]
+      newCourse.students= []
 
-      this.store.dispatch(CourseActions.changeStudentFromCourse({studentId:this.student.id,studentData:newStudent,courseId:courseId,courseData:newCourse}))
+      this.store.dispatch(StudentActions.changeStudentFromCourse({studentId:this.student.id,studentData:newStudent,courseId:courseId,courseData:newCourse}))
+      
+      //this.store.dispatch(StudentActions.loadStudents());
       this.buildSelectList()
       this.courseForm.reset();
-      this.store.dispatch(StudentActions.loadStudents());
+      
+
     }
   }
 

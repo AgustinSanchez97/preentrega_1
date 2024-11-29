@@ -20,6 +20,7 @@ export class CourseEffects {
   changeCourse$: Actions<Action<string>>;
   changeCourseSuccess$: Actions<Action<string>>;
 
+
   changeStudentFromCourse$: Actions<Action<string>>;
   changeStudentFromCourseSuccess$: Actions<Action<string>>;
   
@@ -203,6 +204,7 @@ this.changeCourse$ = createEffect(() => {
         map(() => CourseActions.loadCourses())
       );
     });
+
 /*
     this.changeStudentFromCourse$ = createEffect(() => {
       return this.actions$.pipe(

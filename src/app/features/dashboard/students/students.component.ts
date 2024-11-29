@@ -9,6 +9,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectIsLoadingStudents, selectLoadStudentsError, selectStudents } from './store/student.selectors';
+import { CourseActions } from '../courses/store/course.actions';
+import { ICourse } from '../courses/models';
+import { selectCourses } from '../courses/store/course.selectors';
 
 
 @Component({
@@ -19,27 +22,32 @@ import { selectIsLoadingStudents, selectLoadStudentsError, selectStudents } from
 export class StudentsComponent {
 
   displayedColumns: string[] = ['id', 'name',"email", "actions"];
-
-  isLoading = false;
   dataSource: IStudent[];
 
   students$: Observable<IStudent[]>;
   loadStudentsError$: Observable<Error | null>;
   isLoadingStudents$: Observable<boolean>;
   
+  courses$: Observable<ICourse[]>;
+  coursesWithoutStudent: ICourse[];
+  
 
   ngOnInit(): void {
     this.store.dispatch(StudentActions.loadStudents());
+    this.store.dispatch(CourseActions.loadCourses());
+
   }
   
   studentForm: FormGroup;
 
-  constructor(private matDialog: MatDialog, private store: Store, private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private matDialog: MatDialog, private store: Store, private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute)
+  {
+    this.courses$= this.store.select(selectCourses)
+    this.coursesWithoutStudent =[]
+    this.courses$.subscribe((value) =>{ this.coursesWithoutStudent = [...value]; })
 
     
-
     this.students$ = this.store.select(selectStudents);
-    
     this.isLoadingStudents$ = this.store.select(selectIsLoadingStudents);
     this.loadStudentsError$ = this.store.select(selectLoadStudentsError);
     this.dataSource = []
@@ -66,11 +74,22 @@ export class StudentsComponent {
 
   onDelete(id: string) {
     if (confirm('Esta seguro?')) {
-      console.log(id)
-      this.isLoading = true;
       let result = {id}
+
+      this.coursesWithoutStudent?.forEach(course=> {
+        let filteredUsers = course.studentsId.filter((studentId)=> 
+          {
+            return studentId != id
+          })
+        let newCourse = {...course as ICourse} 
+        newCourse.studentsId = filteredUsers
+        newCourse.students = []
+        this.store.dispatch(CourseActions.changeCourse({id:course.id,data:newCourse}))
+    })
+
       this.store.dispatch(StudentActions.deleteStudent(result))
       this.store.dispatch(StudentActions.loadStudents());
+      this.store.dispatch(CourseActions.loadCourses());
     }
   }
   
@@ -113,6 +132,7 @@ export class StudentsComponent {
 
 
 
+}
 
 /*
   onSubmit(): void {
@@ -171,7 +191,6 @@ export class StudentsComponent {
       relativeTo: this.activatedRoute,
     });
   }*/
-}
   
 /*
   loadStudents(): void {
@@ -251,7 +270,6 @@ export class StudentsComponent {
 
 */
 
-///////
 /*
   onDelete(id: string) {
     if (confirm('Esta seguro?')) {
