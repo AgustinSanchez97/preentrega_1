@@ -44,10 +44,7 @@ export class CourseDetailComponent implements OnInit{
   
   registrationList: IRegistration[] = [];
   studentList: IStudent[] = [];
-  //courseList: ICourse[] = [];
   currentRegistration: IRegistration = {} as IRegistration;
-  //currentStudent: IStudent = {} as IStudent;
-  //currentCourse: ICourse={} as ICourse;
 
   authUser$: Observable<User | null>;
   userData : User= {} as User
@@ -180,9 +177,8 @@ export class CourseDetailComponent implements OnInit{
       
       //FUNCIONABA PERO QUEDO DEPRECADO POR DAR DUPLICADOS. ERA UN INTENTO DE QUE NO GENERE DUPLICADOS
       //this.store.dispatch(CourseActions.changeStudentFromCourse({studentId:studentId,studentData:newStudent,courseId:this.idCourse,courseData:newCourse}))
-      this.store.dispatch(CourseActions.loadCourses());
       
-      //this.buildSelectList()
+      this.store.dispatch(CourseActions.loadCourses());
       this.studentForm.reset();
     }
   }

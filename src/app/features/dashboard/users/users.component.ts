@@ -72,12 +72,7 @@ export class UsersComponent implements OnInit {
       relativeTo: this.activatedRoute,
     });
   }
-  /*
-  display(): void {
-    console.log(this.users$)
-    console.log(this.dataSource)
-  }
-    */
+
 
   openModal(editingUser?: User): void {
     this.matDialog

@@ -71,17 +71,6 @@ export class CoursesComponent implements OnInit {
     });
   }
 
-
-  /*
-  onSubmit(): void {
-    if (this.courseForm.invalid) {
-      this.courseForm.markAllAsTouched();
-    } else {
-      this.store.dispatch(CourseActions.createCourse(this.courseForm.value));
-      this.courseForm.reset();
-    }
-  }*/
-
   onDelete(id: string) {
     if (confirm('Esta seguro?')) {
       let result = {id}

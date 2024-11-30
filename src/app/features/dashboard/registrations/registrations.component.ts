@@ -43,10 +43,6 @@ export class RegistrationsComponent {
 
   authUser$: Observable<User | null>;
   userData : User= {} as User
-  /*
-  students$: Observable<IStudent[]>;
-  studentsWithoutCourse: IStudent[];
-  */
 
   ngOnInit(): void {
     this.store.dispatch(RegistrationActions.loadRegistrations());
@@ -71,14 +67,6 @@ export class RegistrationsComponent {
     this.courses$ = this.store.select(selectCourses);
     this.students$ = this.store.select(selectStudents)
 
-
-
-    /*
-    this.studentsWithoutCourse =[]
-    this.students$.subscribe((value) =>{ this.studentsWithoutCourse = [...value]; })
-    */
-    //this.courses$ = this.store.select(selectCourses);
-    
     this.registrations$.subscribe((value) =>{ this.dataSource = value;this.registrationList=value })
     this.courses$.subscribe((value) =>{ this.courseList = value; })
     this.students$.subscribe((value) =>{ this.studentList = value; })
@@ -118,7 +106,6 @@ export class RegistrationsComponent {
     this.buildSelectList()
   }
 
-  
   onSubmit(courseId:string,studentId: string): void {
     if (this.registrationForm.invalid) {
       this.registrationForm.markAllAsTouched();

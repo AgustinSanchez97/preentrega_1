@@ -83,11 +83,7 @@ export class StudentDetailComponent {
       let studentCourses = student?.courses as ICourse[]
       this.dataSource = studentCourses
       this.student = student
-      //console.log(this.dataSource)
     })
-    
-    // this.isLoadingCourses$ = this.store.select(selectIsLoadingCourses);
-    // this.loadCoursesError$ = this.store.select(selectLoadCoursesError);
     this.buildSelectList()
     
   }
@@ -96,9 +92,6 @@ export class StudentDetailComponent {
     this.students$ = this.store.select(selectStudents);
     this.isLoadingStudents$ = this.store.select(selectIsLoadingStudents);
     this.loadStudentsError$ = this.store.select(selectLoadStudentsError);
-    
-    //this.courses$ = this.store.select(selectCourses);
-    
     
     this.students$.pipe(map(students => students.find(student => student.id == this.idStudent)))
     .subscribe(student=>{
@@ -119,7 +112,6 @@ export class StudentDetailComponent {
   //BORRAR ESTUDIANTE
   onDelete(courseId: string) {
     if (confirm('Esta seguro?')) {
-      //this.isLoading = true;
       this.currentRegistration = this.registrationList.find(registration=>registration.courseId === courseId && registration.studentId === this.idStudent) as IRegistration
       this.store.dispatch(RegistrationActions.deleteRegistration({id:this.currentRegistration?.id}))
       
@@ -186,11 +178,8 @@ export class StudentDetailComponent {
       //FUNCIONABA PERO QUEDO DEPRECADO POR DAR DUPLICADOS. ERA UN INTENTO DE QUE NO GENERE DUPLICADOS
       //this.store.dispatch(StudentActions.changeStudentFromCourse({studentId:this.student.id,studentData:newStudent,courseId:courseId,courseData:newCourse}))
       
-      //this.store.dispatch(StudentActions.loadStudents());
       this.buildSelectList()
       this.courseForm.reset();
-      
-
     }
   }
 
