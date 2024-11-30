@@ -1,1 +1,59 @@
-<p>register works!</p>
+<form [formGroup]="userForm">
+  <div class="row">
+    <div class="col-6">
+      <mat-form-field class="example-form-field w-100">
+        <mat-label>Nombre</mat-label>
+        <input formControlName="firstName" matInput type="text" />
+        <mat-error>
+          @if(userForm.get('firstName')?.hasError('required')) { Este campo es
+          requerido }
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field class="example-form-field w-100">
+        <mat-label>Apellido</mat-label>
+        <input formControlName="lastName" matInput type="text" />
+        <mat-error>
+          @if(userForm.get('lastName')?.hasError('required')) { Este campo es
+          requerido }
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field class="example-form-field w-100">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput type="email" />
+        <mat-error>
+          @if(userForm.get('email')?.hasError('required')) { Este campo es
+          requerido }
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field class="example-form-field w-100">
+        <mat-label>Contraseña</mat-label>
+        <input formControlName="password" matInput type="password" />
+        <mat-error>
+          @if(userForm.get('password')?.hasError('required')) { Este campo es
+          requerido }
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-12">
+      <mat-form-field class="example-form-field w-100">
+        <mat-label>Rol</mat-label>
+        <!-- <input formControlName="role" matInput type="role" /> -->
+        <mat-select formControlName="role" matInput type="role">
+          <mat-option value="user" selected>Usuario</mat-option>
+          <mat-option value="admin" >Administrador</mat-option>
+        </mat-select>
+        <mat-error>
+          @if(userForm.get('role')?.hasError('required')) { Este campo es
+          requerido }
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <button (click)="onSave()" mat-button>Guardar</button>
+</form>

@@ -44,10 +44,10 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
       <td mat-cell *matCellDef="let student">
-        <button (click)="openModal(student)" mat-icon-button>
+        <button *ngIf='userData.role === "admin"' (click)="openModal(student)" mat-icon-button>
           <mat-icon>edit</mat-icon>
         </button>
-        <button (click)="onDelete(student.id)" mat-icon-button>
+        <button *ngIf='userData.role === "admin"' (click)="onDelete(student.id)" mat-icon-button>
           <mat-icon>delete</mat-icon>
         </button>
         <button (click)="goToDetail(student.id)" mat-icon-button>

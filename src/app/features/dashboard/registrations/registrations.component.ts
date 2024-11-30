@@ -155,8 +155,9 @@ export class RegistrationsComponent {
       this.store.dispatch(CourseActions.changeCourse({id:this.currentCourse.id,data:newCourse}))
       this.store.dispatch(StudentActions.changeStudent({id:this.currentStudent.id,data:newStudent}))
       this.store.dispatch(RegistrationActions.createRegistration({studentId,courseId,userId:this.userData.id}));
-      /*
+      
       //SI HACIA ESTO MISMO PERO ELIMINANDO EN ONDELETE SE BUGEABA Y HACIA UN BUCLE INFINITO DE LLAMADAS. ERA EN EL MOMENTO DE LLAMAR A 1 Y DESPUES AL OTRO
+      /*
       this.courses$.pipe(map(courses => courses.find(course => course.id == courseId)))
       .subscribe(course=>{
         //SI SOLO HAGO UN RETURN A VECES GENERA 2 VECES EL REGISTRO

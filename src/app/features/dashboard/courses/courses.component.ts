@@ -14,6 +14,8 @@ import { selectStudents } from '../students/store/student.selectors';
 import { IRegistration } from '../registrations/models';
 import { RegistrationActions } from '../registrations/store/registration.actions';
 import { selectRegistrations } from '../registrations/store/registration.selectors';
+import { User } from '../users/models';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-courses',
@@ -42,9 +44,15 @@ export class CoursesComponent implements OnInit {
     this.store.dispatch(StudentActions.loadStudents());
   }
   
+  authUser$: Observable<User | null>;
+  userData : User= {} as User
   courseForm: FormGroup;
 
-  constructor(private matDialog: MatDialog, private store: Store, private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private matDialog: MatDialog, private store: Store, private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute,private authService: AuthService) {
+
+
+    this.authUser$ = this.authService.authUser$;
+    this.authUser$.subscribe((value) =>{ this.userData = value as User; })
 
     this.students$ = this.store.select(selectStudents)
     this.studentsWithoutCourse =[]

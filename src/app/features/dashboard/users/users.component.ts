@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserActions } from './store/user.actions';
 import { Observable } from 'rxjs';
 import { selectIsLoadingUsers, selectLoadUsersError, selectUsers } from './store/user.selectors';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -23,6 +24,8 @@ export class UsersComponent implements OnInit {
   isLoadingUsers$: Observable<boolean>;
   loadUsersError$: Observable<Error | null>;
   
+  authUser$: Observable<User | null>;
+  userData : User= {} as User
   userForm: FormGroup;
 
   constructor(
@@ -31,9 +34,11 @@ export class UsersComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router, 
     private activatedRoute: ActivatedRoute,
-    private usersService: UsersService,
+    private authService: AuthService,
   ) 
   {
+    this.authUser$ = this.authService.authUser$;
+    this.authUser$.subscribe((value) =>{ this.userData = value as User; })
 
     this.users$ = this.store.select(selectUsers);
     this.isLoadingUsers$ = this.store.select(selectIsLoadingUsers);

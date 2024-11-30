@@ -9,6 +9,7 @@ import { AuthComponent } from './auth.component';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { authFeature } from './store/auth.reducer';
+import { UserEffects } from '../dashboard/users/store/user.effects';
 
 
 
@@ -23,6 +24,8 @@ import { authFeature } from './store/auth.reducer';
     AuthRoutingModule,
     SharedModule,
     StoreModule.forFeature(authFeature),
+    EffectsModule.forFeature([UserEffects]),
+
   ]
 })
 export class AuthModule { }

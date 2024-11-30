@@ -41,14 +41,14 @@
       "token": "jhZMRFl2Q3m4i2JcRTAd"
     },
     {
-      "id": "c770",
+      "id": "94a7",
       "firstName": "Agustin",
       "lastName": "Sanchez",
       "email": "agus@mail.com",
       "password": "agus",
-      "role": "admin",
-      "token": "ddg6ALNow0WtG8XDHXAt",
-      "createdAt": "2024-11-28T21:36:17.990Z"
+      "role": "user",
+      "token": "jWoBIdEF4eJQprtWRMeh",
+      "createdAt": "2024-11-30T07:53:09.472Z"
     }
   ],
   "students": [
@@ -58,7 +58,10 @@
       "lastName": "Administrador",
       "email": "admin@mail.com",
       "createdDate": "2024-10-24T00:14:33.140Z",
-      "coursesId": [],
+      "coursesId": [
+        "f1sfdhg",
+        "f1sasdfhg"
+      ],
       "courses": []
     },
     {
@@ -76,7 +79,9 @@
       "lastName": "Valentine",
       "email": "VV@mail.com",
       "createdDate": "2024-11-04T21:55:39.012Z",
-      "coursesId": [],
+      "coursesId": [
+        "f1sfdhg"
+      ],
       "courses": []
     }
   ],
@@ -84,13 +89,18 @@
     {
       "id": "f1sfdhg",
       "name": "Angular",
-      "studentsId": [],
+      "studentsId": [
+        "4d2as",
+        "xsafF"
+      ],
       "students": []
     },
     {
       "id": "f1sasdfhg",
       "name": "Angular",
-      "studentsId": [],
+      "studentsId": [
+        "4d2as"
+      ],
       "students": []
     },
     {
@@ -118,5 +128,27 @@
       "students": []
     }
   ],
-  "registrations": []
+  "registrations": [
+    {
+      "id": "JEh6hru9",
+      "studentId": "4d2as",
+      "courseId": "f1sfdhg",
+      "userId": "94a7",
+      "registrationDate": "2024-11-30T08:00:19.674Z"
+    },
+    {
+      "id": "j8pIOq0W",
+      "studentId": "xsafF",
+      "courseId": "f1sfdhg",
+      "userId": "94a7",
+      "registrationDate": "2024-11-30T08:00:26.508Z"
+    },
+    {
+      "id": "MKwVTiIv",
+      "studentId": "4d2as",
+      "courseId": "f1sasdfhg",
+      "userId": "94a7",
+      "registrationDate": "2024-11-30T08:15:34.140Z"
+    }
+  ]
 }
