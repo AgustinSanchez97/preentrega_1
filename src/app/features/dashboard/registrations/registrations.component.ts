@@ -42,7 +42,7 @@ export class RegistrationsComponent {
   currentCourse: ICourse={} as ICourse;
 
   authUser$: Observable<User | null>;
-  userData : User
+  userData : User= {} as User
   /*
   students$: Observable<IStudent[]>;
   studentsWithoutCourse: IStudent[];
@@ -61,7 +61,6 @@ export class RegistrationsComponent {
 
 
     this.authUser$ = this.authService.authUser$;
-    this.userData = {} as User
     this.authUser$.subscribe((value) =>{ this.userData = value as User; })
 
     this.registrations$ = this.store.select(selectRegistrations)
@@ -96,12 +95,10 @@ export class RegistrationsComponent {
     this.registrations$ = this.store.select(selectRegistrations)
     this.isLoadingRegistrations$ = this.store.select(selectIsLoadingRegistrations);
     this.loadRegistrationsError$ = this.store.select(selectLoadRegistrationsError);
-
 }
 
   onDelete(registrationId:string) {
     if (confirm('Esta seguro?')) {
-      
       this.currentRegistration = this.registrationList.find((registration)=> registration.id == registrationId) as IRegistration
       this.currentCourse = this.courseList.find((course) => course.id == this.currentRegistration.courseId) as ICourse
       this.currentStudent = this.studentList.find((student) => student.id == this.currentRegistration.studentId) as IStudent
@@ -117,40 +114,8 @@ export class RegistrationsComponent {
       this.store.dispatch(CourseActions.changeCourse({id:this.currentCourse.id,data:newCourse}))
       this.store.dispatch(StudentActions.changeStudent({id:this.currentStudent.id,data:newStudent}))
       this.store.dispatch(RegistrationActions.deleteRegistration({id:registrationId}))
-      
-      /*
-      this.registrations$.pipe(map(registrations => registrations.find(registration => registration.id == registrationId)))
-      .subscribe(registration=>
-        {
-          this.courses$.pipe(map(courses => courses.find(course => course.id == registration?.courseId)))
-          .subscribe(course=>{
-            let newCourse = {...course} as ICourse
-            newCourse.studentsId = newCourse.studentsId.filter(student => student.toString() !== registration?.studentId)
-            newCourse.students = []
-            console.log(course)
-            console.log(newCourse)
-            //this.store.dispatch(CourseActions.changeCourse({id:registration?.courseId as string,data:newCourse}))
-
-            this.students$.pipe(map(students => students.find(student => student.id == registration?.studentId)))
-            .subscribe(student=>{
-              let newStudent = {...student} as IStudent
-              newStudent.coursesId = newStudent.coursesId.filter(course => course.toString() !== registration?.courseId)
-              newStudent.courses= []
-              //this.store.dispatch(StudentActions.changeStudent({id:registration?.studentId as string,data:newStudent}))
-              console.log(student)
-              console.log(newStudent)
-              })
-          })
-        })
-        */
-        //this.buildSelectList()
     }
-    /*
-    this.store.dispatch(RegistrationActions.loadRegistrations());
-    this.store.dispatch(StudentActions.loadStudents());
-    this.store.dispatch(CourseActions.loadCourses());
-    */
-    
+    this.buildSelectList()
   }
 
   
@@ -160,30 +125,38 @@ export class RegistrationsComponent {
     } 
     else 
     {
-      //console.log(courseId,studentId,this.userData.id)
-      //RegistrationActions.createRegistration({studentId,courseId,userId:this.userData.id})
-      
       this.currentCourse = this.courseList.find((course) => course.id == courseId) as ICourse
       this.currentStudent = this.studentList.find((student) => student.id == studentId) as IStudent
       
       if(this.currentCourse.studentsId.find(id => id == studentId) != undefined) return
+      if(this.currentStudent.coursesId.find(id => id == courseId) != undefined) return
+
       
       let newCourse = {...this.currentCourse}
-      newCourse.studentsId = newCourse.studentsId.filter(student => student.toString() !== studentId)
+      let newStudentsList = []
+      newStudentsList.push(...newCourse.studentsId,studentId)
+      newCourse.studentsId = newStudentsList
       newCourse.students = []
+      //ME ASEGURO QUE NO HAYA DUPLICADOS
+      let newStudentsListUnique = new Set(newStudentsList);
+      newCourse.studentsId = [...newStudentsListUnique]
       
       let newStudent = {...this.currentStudent}
       newStudent.coursesId = newStudent.coursesId.filter(course => course.toString() !== courseId)
+      let newCoursesList = []
+      newCoursesList.push(...newStudent.coursesId,courseId)
+      newStudent.coursesId = newCoursesList
       newStudent.courses= []
+      //ME ASEGURO QUE NO HAYA DUPLICADOS
+      let newCoursesListUnique = new Set(newCoursesList);
+      newStudent.coursesId = [...newCoursesListUnique]
+      
       
       this.store.dispatch(CourseActions.changeCourse({id:this.currentCourse.id,data:newCourse}))
       this.store.dispatch(StudentActions.changeStudent({id:this.currentStudent.id,data:newStudent}))
       this.store.dispatch(RegistrationActions.createRegistration({studentId,courseId,userId:this.userData.id}));
-
-      //this.store.dispatch(RegistrationActions.deleteRegistration({id:registrationId}))
-
       /*
-      console.log("llamado")
+      //SI HACIA ESTO MISMO PERO ELIMINANDO EN ONDELETE SE BUGEABA Y HACIA UN BUCLE INFINITO DE LLAMADAS. ERA EN EL MOMENTO DE LLAMAR A 1 Y DESPUES AL OTRO
       this.courses$.pipe(map(courses => courses.find(course => course.id == courseId)))
       .subscribe(course=>{
         //SI SOLO HAGO UN RETURN A VECES GENERA 2 VECES EL REGISTRO
@@ -207,15 +180,11 @@ export class RegistrationsComponent {
           newStudent.coursesId = [...newCoursesListUnique]
           newStudent.courses = []
           this.store.dispatch(StudentActions.changeStudent({id:studentId,data:newStudent}))
-          
           })
         }
       })
       */
     }
     this.buildSelectList()
-
   }
-  
-
 }

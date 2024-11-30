@@ -11,6 +11,9 @@ import { selectIsLoadingStudents, selectLoadStudentsError, selectStudents } from
 import { selectCourses, selectIsLoadingCourses, selectLoadCoursesError } from '../../courses/store/course.selectors';
 import { AuthService } from '../../../../core/services/auth.service';
 import { User } from '../../users/models';
+import { IRegistration } from '../../registrations/models';
+import { selectRegistrations } from '../../registrations/store/registration.selectors';
+import { RegistrationActions } from '../../registrations/store/registration.actions';
 
 
 @Component({
@@ -26,6 +29,8 @@ export class StudentDetailComponent {
   student?:IStudent
   courses$: Observable<ICourse[]>;
   students$ : Observable<IStudent[]>
+  registrations$: Observable<IRegistration[]>
+
 
   //componente
   displayedColumns: string[] = ['id', 'name', "actions"];
@@ -36,17 +41,18 @@ export class StudentDetailComponent {
   isLoadingStudents$: Observable<boolean>;
   loadStudentsError$: Observable<Error | null>;
 
-  // loadCoursesError$: Observable<Error | null>;
-  // isLoadingCourses$: Observable<boolean>;
-  //selectData: ICourse[];
-  
-  
   courseForm: FormGroup;
+  
+  registrationList: IRegistration[] = [];
+  courseList: ICourse[] = [];
+  currentRegistration: IRegistration = {} as IRegistration;
 
-  role:string = "user";
+
   authUser$: Observable<User | null>;
+  userData : User= {} as User
 
   ngOnInit(): void {
+    this.store.dispatch(RegistrationActions.loadRegistrations());
     this.store.dispatch(StudentActions.loadStudents());
     this.store.dispatch(CourseActions.loadCourses());
   }
@@ -57,7 +63,12 @@ export class StudentDetailComponent {
     });
     
     this.authUser$ = this.authService.authUser$;
-    this.authUser$.subscribe((value) =>{ this.role = value?.role as string; console.log(this.role)})
+    this.authUser$.subscribe((value) =>{ this.userData = value as User; })
+
+    this.registrations$ = this.store.select(selectRegistrations)
+    this.registrations$.subscribe((value) =>{ this.registrationList=value })
+    this.courses$ = this.store.select(selectCourses)
+    this.courses$.subscribe((value) =>{ this.courseList=value })
 
     
     this.students$ = this.store.select(selectStudents);
@@ -75,7 +86,6 @@ export class StudentDetailComponent {
       //console.log(this.dataSource)
     })
     
-    this.courses$ = this.store.select(selectCourses)
     // this.isLoadingCourses$ = this.store.select(selectIsLoadingCourses);
     // this.loadCoursesError$ = this.store.select(selectLoadCoursesError);
     this.buildSelectList()
@@ -110,6 +120,8 @@ export class StudentDetailComponent {
   onDelete(courseId: string) {
     if (confirm('Esta seguro?')) {
       //this.isLoading = true;
+      this.currentRegistration = this.registrationList.find(registration=>registration.courseId === courseId && registration.studentId === this.idStudent) as IRegistration
+      this.store.dispatch(RegistrationActions.deleteRegistration({id:this.currentRegistration?.id}))
       
       this.student = this.student as IStudent
       let newStudent = {...this.student}      
@@ -122,10 +134,14 @@ export class StudentDetailComponent {
       let newCourse = {...this.course}      
       newCourse.studentsId = newCourse.studentsId.filter(student => student.toString() !== this.idStudent)
       newCourse.students= []
-      this.store.dispatch(StudentActions.changeStudentFromCourse({studentId:this.idStudent,studentData:newStudent,courseId:courseId,courseData:newCourse}))
       
-      //this.store.dispatch(StudentActions.loadStudents())
-      this.buildSelectList()
+      this.store.dispatch(CourseActions.changeCourse({id:courseId,data:newCourse}))
+      this.store.dispatch(StudentActions.changeStudent({id:this.idStudent,data:newStudent}))
+      
+      //FUNCIONABA PERO QUEDO DEPRECADO POR DAR DUPLICADOS. ERA UN INTENTO DE QUE NO GENERE DUPLICADOS
+      //this.store.dispatch(StudentActions.changeStudentFromCourse({studentId:this.idStudent,studentData:newStudent,courseId:courseId,courseData:newCourse}))
+      this.store.dispatch(StudentActions.loadStudents())
+      //this.buildSelectList()
     }
   }
 
@@ -134,15 +150,19 @@ export class StudentDetailComponent {
     if (this.courseForm.invalid) {
       this.courseForm.markAllAsTouched();
     } else {
+
       this.student = this.student as IStudent
       let newStudent = {...this.student}
       let newCoursesList = []
       newCoursesList.push(...newStudent.coursesId,courseId)
       newStudent.coursesId = newCoursesList
+      
+      //CREA LISTA UNICA SIN DUPLICADOS
       let newCoursesListUnique = new Set(newCoursesList);
       newStudent.coursesId = [...newCoursesListUnique]
       newStudent.courses = []
       
+      this.store.dispatch(StudentActions.changeStudent({id:this.idStudent,data:newStudent}))
       
       this.findCourse(courseId)
 
@@ -150,12 +170,21 @@ export class StudentDetailComponent {
       let newCourse = {...this.course}
       let newStudentsList = []
       newStudentsList.push(...newCourse.studentsId, this.student.id)
+
       //CREA LISTA UNICA SIN DUPLICADOS
       let newStudentsListUnique = new Set(newStudentsList);
       newCourse.studentsId = [...newStudentsListUnique]
       newCourse.students= []
 
-      this.store.dispatch(StudentActions.changeStudentFromCourse({studentId:this.student.id,studentData:newStudent,courseId:courseId,courseData:newCourse}))
+      if((this.registrationList.find(registration=>registration.courseId === courseId && registration.studentId === this.student?.id) as IRegistration) == undefined)
+        {
+          this.store.dispatch(RegistrationActions.createRegistration({studentId:this.student.id,courseId,userId:this.userData.id}));
+        }
+  
+      this.store.dispatch(CourseActions.changeCourse({id:courseId,data:newCourse}))
+      
+      //FUNCIONABA PERO QUEDO DEPRECADO POR DAR DUPLICADOS. ERA UN INTENTO DE QUE NO GENERE DUPLICADOS
+      //this.store.dispatch(StudentActions.changeStudentFromCourse({studentId:this.student.id,studentData:newStudent,courseId:courseId,courseData:newCourse}))
       
       //this.store.dispatch(StudentActions.loadStudents());
       this.buildSelectList()
@@ -167,10 +196,7 @@ export class StudentDetailComponent {
 
   findCourse(courseId:string)
   {
-    this.courses$.pipe(map(courses => courses.find(course => course.id == courseId)))
-    .subscribe(course=>{
-      this.course = course
-    })
+    this.course = this.courseList.find((course) => course.id == courseId) as ICourse
   }
 
 }

@@ -100,13 +100,12 @@ export class StudentEffects {
       return this.actions$.pipe(
         ofType(StudentActions.deleteStudent),
         concatMap((action) =>
-          
           this.studentsService
             .removeStudentById(action.id)
             .pipe(
               map((data) => StudentActions.deleteStudentSuccess({ data })),
               catchError((error) =>
-                of(StudentActions.createStudentFailure({ error }))
+                of(StudentActions.deleteStudentFailure({ error }))
               )
             )
         )

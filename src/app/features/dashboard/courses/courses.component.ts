@@ -11,6 +11,9 @@ import { CourseDialogComponent } from './course-dialog/course-dialog.component';
 import { IStudent } from '../students/models';
 import { StudentActions } from '../students/store/student.actions';
 import { selectStudents } from '../students/store/student.selectors';
+import { IRegistration } from '../registrations/models';
+import { RegistrationActions } from '../registrations/store/registration.actions';
+import { selectRegistrations } from '../registrations/store/registration.selectors';
 
 @Component({
   selector: 'app-courses',
@@ -30,8 +33,11 @@ export class CoursesComponent implements OnInit {
   students$: Observable<IStudent[]>;
   studentsWithoutCourse: IStudent[];
   
+  registrations$ :Observable<IRegistration[]>;
+  registrationList: IRegistration[] = [];
 
   ngOnInit(): void {
+    this.store.dispatch(RegistrationActions.loadRegistrations());
     this.store.dispatch(CourseActions.loadCourses());
     this.store.dispatch(StudentActions.loadStudents());
   }
@@ -44,6 +50,8 @@ export class CoursesComponent implements OnInit {
     this.studentsWithoutCourse =[]
     this.students$.subscribe((value) =>{ this.studentsWithoutCourse = [...value]; })
     
+    this.registrations$ = this.store.select(selectRegistrations)
+    this.registrations$.subscribe((value) =>{ this.registrationList=value })
     
     this.courses$ = this.store.select(selectCourses);
     this.isLoadingCourses$ = this.store.select(selectIsLoadingCourses);
@@ -78,10 +86,14 @@ export class CoursesComponent implements OnInit {
         let newStudent = {...student as IStudent} 
         newStudent.coursesId = filteredUsers
         newStudent.courses = []
-        console.log(newStudent)
         this.store.dispatch(StudentActions.changeStudent({id:student.id,data:newStudent}))
     })
 
+    let registrationListToDelete = this.registrationList.filter((registration)=>registration.courseId === id)
+    registrationListToDelete.forEach(registration=>{
+      this.store.dispatch(RegistrationActions.deleteRegistration({id:registration.id}))
+    })
+    
       this.store.dispatch(CourseActions.deleteCourse(result))
       this.store.dispatch(StudentActions.loadStudents());
       this.store.dispatch(CourseActions.loadCourses());
@@ -113,10 +125,7 @@ export class CoursesComponent implements OnInit {
   
   
   handleUpdate(id: string, update: ICourse): void {
-    
     this.store.dispatch(CourseActions.changeCourse({id, data:update}));
-    //this.store.dispatch(CourseActions.createCourse(this.courseForm.value));
-    
   }
 
   goToDetail(id: string): void {

@@ -124,7 +124,7 @@ export class CourseEffects {
             .pipe(
               map((data) => CourseActions.deleteCourseSuccess({ data })),
               catchError((error) =>
-                of(CourseActions.createCourseFailure({ error }))
+                of(CourseActions.deleteCourseFailure({ error }))
               )
             )
         )

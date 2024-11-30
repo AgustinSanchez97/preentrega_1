@@ -13,6 +13,8 @@ import { CourseDialogComponent } from './course-dialog/course-dialog.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { studentFeature } from '../students/store/student.reducer';
 import { StudentEffects } from '../students/store/student.effects';
+import { RegistrationEffects } from '../registrations/store/registration.effects';
+import { registrationFeature } from '../registrations/store/registration.reducer';
 
 
 @NgModule({
@@ -26,10 +28,12 @@ import { StudentEffects } from '../students/store/student.effects';
     CoursesRoutingModule,
     SharedModule,
 
+    StoreModule.forFeature(registrationFeature),
+    EffectsModule.forFeature([RegistrationEffects]),
     StoreModule.forFeature(studentFeature),
     EffectsModule.forFeature([StudentEffects]),
     StoreModule.forFeature(courseFeature),
-    EffectsModule.forFeature([CourseEffects]),
+    EffectsModule.forFeature([CourseEffects])
   ],
   exports: [CoursesComponent]
 })

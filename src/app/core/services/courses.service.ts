@@ -15,46 +15,11 @@ export class CoursesService {
 
   constructor(private httpClient: HttpClient) {}
   
-  
-  /*
-  courses$ : ICourse[] = []
-  students$: IStudent[] = []
-  getCourses(): Observable<ICourse[]> {
-    this.httpClient.get<IStudent[]>(`${this.baseURL}/students/`).subscribe((students) =>
-      { 
-        this.students$ = students;
-        this.httpClient.get<ICourse[]>(`${this.baseURL}/courses`).subscribe((courses:ICourse[])=>
-        {
-          this.courses$ = courses;
-          this.courses$.forEach(course =>
-          {
-            course.students = []
-            course.studentsId.forEach((studentKey)=>
-              {
-                let content = (students.find(studentObject => studentObject.id === studentKey.toString()))
-                if(content == null) return
-
-                content as IStudent == content
-                course.students?.push(content)  
-              }
-            )
-          }
-        )
-        console.log(of(courses) as Observable<ICourse[]>)
-      }
-    )      
-  });
-  return of(this.courses$) as Observable<ICourse[]>
-    
-    return this.httpClient.get<ICourse[]>(`${this.baseURL}/courses?_embed=student`);
-  }*/
-  
   getCourses(): Observable<ICourse[]> {
     return this.httpClient.get<ICourse[]>(`${this.baseURL}/courses`);
   }
 
   getById(id: string): Observable<ICourse > {
-    //console.log("entro")
     return this.httpClient.get<ICourse>(`${this.baseURL}/courses/${id}`);
   }
   
@@ -73,10 +38,8 @@ export class CoursesService {
   }
 
   updateCourseById(id: string, data: Partial<ICourse>) {
-    //console.log(id,{...data})
     return this.httpClient
       .patch<ICourse>(`${this.baseURL}/courses/${id}`, data)
       .pipe(concatMap(() => this.getCourses()));
   }
-
 }

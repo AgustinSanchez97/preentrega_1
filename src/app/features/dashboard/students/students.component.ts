@@ -12,6 +12,9 @@ import { selectIsLoadingStudents, selectLoadStudentsError, selectStudents } from
 import { CourseActions } from '../courses/store/course.actions';
 import { ICourse } from '../courses/models';
 import { selectCourses } from '../courses/store/course.selectors';
+import { IRegistration } from '../registrations/models';
+import { selectRegistrations } from '../registrations/store/registration.selectors';
+import { RegistrationActions } from '../registrations/store/registration.actions';
 
 
 @Component({
@@ -30,12 +33,15 @@ export class StudentsComponent {
   
   courses$: Observable<ICourse[]>;
   coursesWithoutStudent: ICourse[];
+
+  registrations$ :Observable<IRegistration[]>;
+  registrationList: IRegistration[] = [];
   
 
   ngOnInit(): void {
+    this.store.dispatch(RegistrationActions.loadRegistrations());
     this.store.dispatch(StudentActions.loadStudents());
     this.store.dispatch(CourseActions.loadCourses());
-
   }
   
   studentForm: FormGroup;
@@ -45,6 +51,10 @@ export class StudentsComponent {
     this.courses$= this.store.select(selectCourses)
     this.coursesWithoutStudent =[]
     this.courses$.subscribe((value) =>{ this.coursesWithoutStudent = [...value]; })
+
+    this.registrations$ = this.store.select(selectRegistrations)
+    this.registrations$.subscribe((value) =>{ this.registrationList=value })
+
 
     
     this.students$ = this.store.select(selectStudents);
@@ -87,9 +97,15 @@ export class StudentsComponent {
         this.store.dispatch(CourseActions.changeCourse({id:course.id,data:newCourse}))
     })
 
-      this.store.dispatch(StudentActions.deleteStudent(result))
-      this.store.dispatch(StudentActions.loadStudents());
-      this.store.dispatch(CourseActions.loadCourses());
+    let registrationListToDelete = this.registrationList.filter((registration)=>registration.studentId === id)
+    registrationListToDelete.forEach(registration=>{
+      this.store.dispatch(RegistrationActions.deleteRegistration({id:registration.id}))
+    })
+
+    
+    this.store.dispatch(StudentActions.deleteStudent(result))
+    this.store.dispatch(StudentActions.loadStudents());
+    this.store.dispatch(CourseActions.loadCourses());
     }
   }
   
@@ -118,10 +134,7 @@ export class StudentsComponent {
   
   
   handleUpdate(id: string, update: IStudent): void {
-    
     this.store.dispatch(StudentActions.changeStudent({id, data:update}));
-    //this.store.dispatch(StudentActions.createStudent(this.studentForm.value));
-    
   }
 
   goToDetail(id: string): void {
