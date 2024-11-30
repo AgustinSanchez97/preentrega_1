@@ -139,9 +139,9 @@ export class StudentDetailComponent {
       let newCoursesList = []
       newCoursesList.push(...newStudent.coursesId,courseId)
       newStudent.coursesId = newCoursesList
-      newStudent.courses = []
       let newCoursesListUnique = new Set(newCoursesList);
       newStudent.coursesId = [...newCoursesListUnique]
+      newStudent.courses = []
       
       
       this.findCourse(courseId)

@@ -50,7 +50,7 @@ export class CoursesService {
   }*/
   
   getCourses(): Observable<ICourse[]> {
-    return this.httpClient.get<ICourse[]>(`${this.baseURL}/courses?_embed=student`);
+    return this.httpClient.get<ICourse[]>(`${this.baseURL}/courses`);
   }
 
   getById(id: string): Observable<ICourse > {

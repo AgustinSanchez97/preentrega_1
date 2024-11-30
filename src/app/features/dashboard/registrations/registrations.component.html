@@ -1,0 +1,90 @@
+<h2>INSCRIPCIONES</h2>
+
+<div class="container">
+  
+    <h2>Estudiantes anotados al Curso</h2>
+    
+    <!-- <button (click)="onDisplay()" mat-flat-button>display</button> -->
+
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value.courseId,registrationForm.value.studentId)">
+      <mat-form-field>
+        <mat-label>Curso</mat-label>
+        <mat-select formControlName="courseId">
+          <mat-option
+            [value]="course.id"
+            *ngFor="let course of courseList"
+          >
+            {{ course.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        
+        <mat-label>Estudiante</mat-label>
+        <mat-select formControlName="studentId">
+            <mat-option
+              [value]="student.id"
+              *ngFor="let student of studentList"
+            >
+              {{ student.lastName }}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+      <button type="submit" mat-flat-button>Guardar</button>
+    </form>
+      
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+          
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let registration">{{ registration.id }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="studentId">
+      <th mat-header-cell *matHeaderCellDef>Id de Estudiante</th>
+      <td color="violet" appHighlight mat-cell *matCellDef="let registration">
+        {{ registration.studentId}}
+      </td>
+    </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="courseId">
+      <th mat-header-cell *matHeaderCellDef>Id de Curso</th>
+      <td mat-cell *matCellDef="let registration">{{ registration.courseId}}</td>
+    </ng-container>
+    <ng-container matColumnDef="userId">
+        <th mat-header-cell *matHeaderCellDef>Id de Usuario</th>
+        <td mat-cell *matCellDef="let registration">{{ registration.userId}}</td>
+    </ng-container>
+    <ng-container matColumnDef="registrationDate">
+      <th mat-header-cell *matHeaderCellDef>Fecha de Inscripcion</th>
+      <td mat-cell *matCellDef="let registration">{{ registration.registrationDate}}</td>
+    </ng-container>
+    
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let registration">
+          <button (click)="onDelete(registration.id)" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <!-- <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let registration">
+        <button (click)="onDelete(registration.id)" mat-icon-button>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container> -->
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

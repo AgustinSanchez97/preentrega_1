@@ -122,8 +122,10 @@ export class CourseDetailComponent implements OnInit{
       let newStudentsList = []
       newStudentsList.push(...newCourse.studentsId,studentId)
       newCourse.studentsId = newStudentsList
-      newCourse.students = []
-      
+      //CREA LISTA UNICA SIN DUPLICADOS
+      let newStudentsListUnique = new Set(newStudentsList);
+      newCourse.studentsId = [...newStudentsListUnique]
+      newCourse.students= []
       
       this.findStudent(studentId)
 
